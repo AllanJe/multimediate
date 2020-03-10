@@ -18,24 +18,6 @@ vignette: >
 ---
 This package is based on the work presented in \cite{jerolon_causal_2018} and the R package mediation presented in \cite{tingley_mediation_2014}. Models supported by our R function are shown in Table \ref{models}.
 
-\begin{center}
-\begin{table}[htp]
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-& \multicolumn{4}{c|}{\it{Outcome}}\\\cline{2-5}
-\it{Mediators} & Linear & Binary & Ordered categorical & Non-ordered categorical \\
-\hline
-1) Linear &\checkmark&\checkmark &  \checkmark & \xmark \\
-2) Binary (Probit) & \checkmark&\checkmark  &  \checkmark & \xmark\\
-3) Ordered categorical (Probit) & \checkmark&\checkmark  &  \checkmark & \xmark \\
-4) Non-ordered categorical &  \xmark & \xmark &  \xmark & \xmark\\
-Mix of 1), 2) and 3) & \checkmark & \checkmark &  \checkmark & \xmark\\
-\hline
-\end{tabular}
-\caption{Models supported by \texttt{multimediate}.}\label{models}
-\end{table}
-\end{center}
-
 <table border="4" width="100%">
 <thead>
         <tr>
@@ -74,6 +56,12 @@ library(multimediate)
 ```
 
 # Data 1
+
+- Binary treatment T
+- Linear Outcome Y
+- Linear mediators $M_1,M_2,M_3$ 
+- Binary covariables $C_1,C_2,C_3$ 
+
 <img src="data1.png">
 
 \begin{figure}[htp]
@@ -113,14 +101,9 @@ edges %
 \end{figure}
 
 
-\begin{center}
-\begin{itemize}
-\item Binary treatment T
-\item Linear Outcome Y
-\item Linear mediators $M_1,M_2,M_3$ 
-\item Binary covariables $C_1,C_2,C_3$ 
-\end{itemize}
-\end{center}
+
+
+
 
 ```{r DATA1}
 data(data1)
@@ -176,6 +159,12 @@ summary(med.analysis,opt="avg")
 ```
 
 # Data 2 
+
+- Binary treatment $T$
+- Binary Outcome $Y$
+- Linear mediators $M_1,M_2,M_3$ 
+- Binary covariables $C_1,C_2,C_3$ 
+
 <img src="data2.png">
 
 \begin{figure}[htp]
@@ -212,13 +201,6 @@ edges %
 \end{tikzpicture} 
 \caption{DAG of data 2}\label{fig2}
 \end{figure}
-
-\begin{itemize}
-\item Binary treatment T
-\item Binary Outcome Y
-\item Linear mediators $M_1,M_2,M_3$ 
-\item Binary covariables $C_1,C_2,C_3$ 
-\end{itemize}
 
 ```{r DATA2}
 data(data2)
@@ -276,6 +258,12 @@ summary(med.analysis,opt="avg",logit="logOR")
 ```
 
 # Data 3
+
+- Binary treatment $T$
+- Polytomic Outcome $Y$
+- Linear mediators $M_1,M_2,M_3$ 
+- Binary covariables $C_1,C_2,C_3$ 
+
 <img src="data3.png">
 
 \begin{figure}[htp]
@@ -315,15 +303,6 @@ edges %
 \end{tikzpicture} 
 \caption{DAG of data 3}\label{fig3}
 \end{figure}
-
-
-\begin{itemize}
-\item Binary treatment T
-\item Polytomic Outcome Y
-\item Linear mediators $M_1,M_2,M_3$ 
-\item Binary covariables $C_1,C_2,C_3$ 
-\end{itemize}
-
 
 ```{r DATA3}
 data(data3)
@@ -381,6 +360,14 @@ summary(med.analysis,opt="avg")
 ```
 
 # Data 4
+
+- Binary treatment $T$
+- Linear Outcome $Y$
+- Linear mediator $M_1$
+- Binary mediator $,M_2$
+- Polytomic mediator $M_3$ 
+- Binary covariables $C_1,C_2,C_3$ 
+
 <img src="data4.png">
 
 \begin{figure}[htp]
@@ -424,14 +411,6 @@ edges %
 \end{figure}
 
 
-\begin{itemize}
-\item Binary treatment T
-\item Linear Outcome Y
-\item Linear mediator $M_1$
-\item Binary mediator $,M_2$
-\item Polytomic mediator $M_3$ 
-\item Binary covariables $C_1,C_2,C_3$ 
-\end{itemize}
 ```{r DATA4}
 data(data4)
 data4$Treatment=as.factor(data4$Treatment)
