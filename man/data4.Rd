@@ -39,7 +39,8 @@ Toy dataset 4
 
 #Yreg=lm(Outcome~ Treatment + M1 + M2 + M3 + C1 + C2 + C3, data=data4)
 
-#med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
+#med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),
+#correlated=TRUE,model.y=Yreg,treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
 
 #summary(med.analysis,opt="avg")
 }
