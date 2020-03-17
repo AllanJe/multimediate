@@ -4,7 +4,7 @@
 #' 'multimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimate average causal mediation effects on OR scale and logOR scale.
 #'
 #'@param lmodel.m list of fitted models object for mediators. Can be of class 'lm', 'polr','glm'.
-#'@param correlated a logical value. if 'FALSE' a identity matrix is used for the matrix of correlation of mediators; if 'TRUE' matrix of correlation is estimated. Default is 'TRUE'.
+#'@param correlated a logical value. if 'FALSE' a identity matrix is used for the matrix of correlation of mediators; if 'TRUE' matrix of correlation is estimated. Default is 'FALSE'.
 #'@param model.y a fitted model object for the outcome. Can be of class 'lm', 'polr','glm'.
 #'@param treat a character string indicating the name of the treatment variable used in the models. The treatment can be either binary (integer or a two-valued factor) or continuous (numeric).
 #'@param treat.value value of the treatment variable used as the treatment condition. Default is 1.
@@ -141,10 +141,13 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
 
 
   }
+
   effect.tmp.NM=array(NA, dim = c(N, J, 2, NM))
   effect.tmp=array(NA, dim = c(N, J, 4))
   OR.NM=array(NA, dim = c(J, 2, NM))
   OR=array(NA, dim = c(J, 4))
+  #OR.NM.polr=array(NA, dim = c(J, 2, NM,(length(model.y$lev)-2)))
+  #OR.polr=array(NA, dim = c(J, 4,(length(model.y$lev)-2)))
   print("Simulation of counterfactuals outcomes")
   for (e in 1:4) {
     tt <- switch(e, c(1, 1, 1, 0), c(0, 0, 1, 0),
@@ -340,22 +343,36 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       effect.tmp[,,e]=(Pr1>0)-(Pr0>0)
       if (model.y$family$link=="logit"){
         OR[,e]=(1-apply(Pr0>0,c(2),mean))/(1-apply(Pr1>0,c(2),mean))*(1+(apply(effect.tmp[,,e],c(2),mean)/apply(Pr0>0,c(2),mean)))
-        #OR[,e]=(apply(Pr1>0, c(2), mean))/(1-apply(Pr1>0, c(2), mean))*(apply(1-Pr0>0, c(2), mean))/(apply(Pr0>0, c(2), mean))
       }
       if (NM!=1 & e<=2){
 
         effect.tmp.NM[,,e,]=(Pr1.NM>0)-(Pr0.NM>0)
         if (model.y$family$link=="logit"){
           OR.NM[,e,]=(1-apply(Pr0.NM>=0, c(2,3), mean))/(1-apply(Pr1.NM>=0, c(2,3), mean))*(1+(apply(effect.tmp.NM[,,e,],c(2,3),mean)/apply(Pr0.NM>=0, c(2,3), mean)))
-          #OR.NM[,e,]=(apply(Pr1.NM>0, c(2,3), mean))/(1-apply(Pr1.NM>0, c(2,3), mean))*(apply(1-Pr0.NM>0, c(2,3), mean))/(apply(Pr0.NM>0, c(2,3), mean))
         }
+
       }
     }
 
     else {
       effect.tmp[,,e]=Pr1-Pr0
+      # if (inherits(model.y,"polr")){
+      #   for( pol in 2:(length(model.y$lev)-1)){
+      #     print(pol)
+      #     lev=as.numeric(model.y$lev)[pol]
+      #     OR.polr[,e,pol]=(apply(Pr0<=lev,c(2),mean))/(apply(Pr1<=lev,c(2),mean))*(apply(Pr1>lev,c(2),mean))/(apply(Pr0>lev,c(2),mean))
+      #   }
+      #
+      # }
       if (NM!=1 & e<=2){
         effect.tmp.NM[,,e,]=Pr1.NM-Pr0.NM
+        #  if (inherits(model.y,"polr")){
+        #   for( pol in 2:(length(model.y$lev)-1)){
+        #     print(pol)
+        #     lev=as.numeric(model.y$lev)[pol]
+        #     OR.NM.polr[,e,,pol]=(apply(Pr0.NM<=lev,c(2,3),mean))/(apply(Pr1.NM<=lev,c(2,3),mean))*(apply(Pr1.NM>lev,c(2,3),mean))/(apply(Pr0.NM>lev,c(2,3),mean))
+        #   }
+        # }
       }
     }
   }
