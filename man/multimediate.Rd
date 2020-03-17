@@ -18,7 +18,7 @@ multimediate(
 \arguments{
 \item{lmodel.m}{list of fitted models object for mediators. Can be of class 'lm', 'polr','glm'.}
 
-\item{correlated}{a logical value. if 'FALSE' a identity matrix is used for the matrix of correlation of mediators; if 'TRUE' matrix of correlation is estimated. Default is 'TRUE'.}
+\item{correlated}{a logical value. if 'FALSE' a identity matrix is used for the matrix of correlation of mediators; if 'TRUE' matrix of correlation is estimated. Default is 'FALSE'.}
 
 \item{model.y}{a fitted model object for the outcome. Can be of class 'lm', 'polr','glm'.}
 
