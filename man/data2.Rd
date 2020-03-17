@@ -28,7 +28,11 @@ Toy dataset 2
 #data2$C1=as.factor(data2$C1)
 #data2$C2=as.factor(data2$C2)
 #data2$C3=as.factor(data2$C3)
+#data2$M1=as.numeric(data2$M1)
+#data2$M2=as.numeric(data2$M2)
+#data2$M3=as.numeric(data2$M3)
 #data2$Outcome=as.factor(data2$Outcome)
+#summary(data2)
 
 #M1reg=lm(M1~ Treatment + C1, data=data2)
 #M2reg=lm(M2~ Treatment + C2, data=data2)
@@ -36,12 +40,11 @@ Toy dataset 2
 
 #Yreg=glm(Outcome~ Treatment + M1 + M2 + M3 + C1 + C2 + C3, data=data2, family = binomial("logit"))
 
-#med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,
-                          #model.y=Yreg,treat="Treatment",treat.value=1,
-                          #control.value=0,J=1000,conf.level=0.95)
+#med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
 
-#summary.mm(out=med.analysis,opt="avg",logit="effects")
-#summary.mm(out=med.analysis,opt="avg",logit="logOR")
-#summary.mm(out=med.analysis,opt="avg",logit="OR")
+# summary(med.analysis,opt="avg",logit="effects")
+# summary(med.analysis,opt="avg",logit="OR")
+# summary(med.analysis,opt="avg",logit="logOR")
+# summary(med.analysis,opt="avg",logit="all")
 }
 \keyword{datasets}
