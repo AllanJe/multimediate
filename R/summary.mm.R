@@ -40,17 +40,17 @@ summary.mm = function(object,opt="navg",logit="all",...){
                           P.val     =round(c(object$ORd1.p,object$ORn1.p,object$ORd0.p,object$ORn0.p,triout.NM(object$ORd1.p.NM,object$ORn1.p.NM,object$ORd0.p.NM,object$ORn0.p.NM),object$ORz1.p,object$ORz0.p,object$ORtau.p),4)
         )
         ORavg=data.frame("."        =paste("OR",nom.avg),
-                         Estimation=round(c(object$ORd.avg,object$ORn.avg,triout.avg.NM(object$ORd.avg.NM,object$ORn.avg.NM),object$ORz.avg,object$ORtau.coef),4),
-                         IC.inf    =round(c(object$ORd.avg.ci[1],object$ORn.avg.ci[1],triout.ci.avg.NM(object$ORd.avg.ci.NM,object$ORn.avg.ci.NM)[,1],object$ORz.avg.ci[1],object$ORtau.ci[1]),4),
-                         IC.sup    =round(c(object$ORd.avg.ci[2],object$ORn.avg.ci[2],triout.ci.avg.NM(object$ORd.avg.ci.NM,object$ORn.avg.ci.NM)[,2],object$ORz.avg.ci[2],object$ORtau.ci[2]),4),
-                         P.val     =round(c(object$ORd.avg.p,object$ORn.avg.p,triout.avg.NM(object$ORd.avg.p.NM,object$ORn.avg.p.NM),object$ORz.avg.p,object$ORtau.p),4)
+                         Estimation=round(c(object$ORd.avg      ,object$ORn.avg      ,triout.avg.NM(   object$ORd.avg.NM                   ,object$ORn.avg.NM)       ,object$ORz.avg      ,object$ORtau.coef) ,4),
+                         IC.inf    =round(c(object$ORd.avg.ci[1],object$ORn.avg.ci[1],triout.ci.avg.NM(object$ORd.avg.ci.NM             ,object$ORn.avg.ci.NM)[,1],object$ORz.avg.ci[1],object$ORtau.ci[1]),4),
+                         IC.sup    =round(c(object$ORd.avg.ci[2],object$ORn.avg.ci[2],triout.ci.avg.NM(object$ORd.avg.ci.NM             ,object$ORn.avg.ci.NM)[,2],object$ORz.avg.ci[2],object$ORtau.ci[2]),4),
+                         P.val     =round(c(object$ORd.avg.p    ,object$ORn.avg.p    ,triout.avg.NM(   object$ORd.avg.p.NM                 ,object$ORn.avg.p.NM)     ,object$ORz.avg.p    ,object$ORtau.p)    ,4)
         )
 
         logORnavg=data.frame("."        =paste("logOR",nom.navg),
-                             Estimation=round(c(object$logORd1,object$logORn1,object$logORd0,object$logORn0,triout.NM(object$logORd1.NM,object$logORn1.NM,object$logORd0.NM,object$logORn0.NM),object$logORz1,object$logORz0,object$logORtau.coef),4),
-                             IC.inf    =round(c(object$logORd1.ci[1],object$logORn1.ci[1],object$logORd0.ci[1],object$logORn0.ci[1],triout.ci.NM(object$logORd1.ci.NM,object$logORn1.ci.NM,object$logORd0.ci.NM,object$logORn0.ci.NM)[,1],object$logORz1.ci[1],object$logORz0.ci[1],object$logORtau.ci[1]),4),
-                             IC.sup    =round(c(object$logORd1.ci[2],object$logORn1.ci[2],object$logORd0.ci[2],object$logORn0.ci[2],triout.ci.NM(object$logORd1.ci.NM,object$logORn1.ci.NM,object$logORd0.ci.NM,object$logORn0.ci.NM)[,2],object$logORz1.ci[2],object$logORz0.ci[2],object$logORtau.ci[2]),4),
-                             P.val     =round(c(object$logORd1.p,object$logORn1.p,object$logORd0.p,object$logORn0.p,triout.NM(object$logORd1.p.NM,object$logORn1.p.NM,object$logORd0.p.NM,object$logORn0.p.NM),object$logORz1.p,object$logORz0.p,object$logORtau.p),4)
+                             Estimation=round(c(object$logORd1,               object$logORn1,      object$logORd0,      object$logORn0,      triout.NM(   object$logORd1.NM,   object$logORn1.NM,   object$logORd0.NM,   object$logORn0.NM),       object$logORz1,      object$logORz0,      object$logORtau.coef), 4),
+                             IC.inf    =round(c(object$logORd1.ci[1],         object$logORn1.ci[1],object$logORd0.ci[1],object$logORn0.ci[1],triout.ci.NM(object$logORd1.ci.NM,object$logORn1.ci.NM,object$logORd0.ci.NM,object$logORn0.ci.NM)[,1],object$logORz1.ci[1],object$logORz0.ci[1],object$logORtau.ci[1]),4),
+                             IC.sup    =round(c(object$logORd1.ci[2],         object$logORn1.ci[2],object$logORd0.ci[2],object$logORn0.ci[2],triout.ci.NM(object$logORd1.ci.NM,object$logORn1.ci.NM,object$logORd0.ci.NM,object$logORn0.ci.NM)[,2],object$logORz1.ci[2],object$logORz0.ci[2],object$logORtau.ci[2]),4),
+                             P.val     =round(c(object$logORd1.p,             object$logORn1.p,    object$logORd0.p,    object$logORn0.p,    triout.NM(   object$logORd1.p.NM, object$logORn1.p.NM, object$logORd0.p.NM, object$logORn0.p.NM),     object$logORz1.p,    object$logORz0.p,    object$logORtau.p),    4)
         )
         logORavg=data.frame("."        =paste("logOR",nom.avg),
                             Estimation=round(c(object$logORd.avg,object$logORn.avg,triout.avg.NM(object$logORd.avg.NM,object$logORn.avg.NM),object$logORz.avg,object$logORtau.coef),4),
