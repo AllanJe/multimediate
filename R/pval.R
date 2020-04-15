@@ -1,7 +1,7 @@
-pval <- function(x, xhat){
-  if (xhat == 0) {out <- 1}
+pval <- function(x, xhat,seu=0){
+  if (xhat == seu) {out <- 1}
   else {
-    out <- 2 * min(sum(x > 0,na.rm=TRUE), sum(x < 0,na.rm=TRUE)) / length(x)
+    out <- 2 * min(sum(x > seu,na.rm=TRUE), sum(x < seu,na.rm=TRUE)) / length(x)
   }
   return(min(out, 1))
 }
