@@ -387,27 +387,6 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   et2 <- effect.tmp[, , 2] # joint mediated effect delta(0)
   et3 <- effect.tmp[, , 3] # direct effect zeta(1)
   et4 <- effect.tmp[, , 4] # direct effect zeta(0)
-  et5 <- effect.tmp.NM[, ,1,] # mediated effect delta(1)
-  et6 <- effect.tmp.NM[, ,2,] # mediated effect delta(0)
-
-  if (!is.null(model.y$family)){
-    if ( model.y$family$link=="logit"){
-      # or1 <- OR[ , 1] # joint mediated effect ORdelta(1)
-      # or2 <- OR[ , 2] # joint mediated effect ORdelta(0)
-      # or3 <- OR[ , 3] # direct effect ORzeta(1)
-      # or4 <- OR[ , 4] # direct effect ORzeta(0)
-      # or5 <- OR.NM[ ,1,] # mediated effect ORdelta(1)
-      # or6 <- OR.NM[ ,2,] # mediated effect ORdelta(0)
-
-      ORdelta.1 <- OR[ , 1] # joint mediated effect ORdelta(1)
-      ORdelta.0 <- OR[ , 2] # joint mediated effect ORdelta(0)
-      ORzeta.1 <- OR[ , 3] # direct effect ORzeta(1)
-      ORzeta.0 <- OR[ , 4] # direct effect ORzeta(0)
-      ORdelta.1.NM <- OR.NM[ ,1,] # mediated effect ORdelta(1)
-      ORdelta.0.NM <- OR.NM[ ,2,] # mediated effect ORdelta(0)
-
-    }}
-
 
   delta.1 <- t(as.matrix(apply(et1, 2, mean,na.rm=TRUE)))
   delta.0 <- t(as.matrix(apply(et2, 2, mean,na.rm=TRUE)))
@@ -415,7 +394,6 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   zeta.1 <- t(as.matrix(apply(et3, 2, mean,na.rm=TRUE)))
   zeta.0 <- t(as.matrix(apply(et4, 2, mean,na.rm=TRUE)))
 
-  #rm(effects.tmp)
   tau <- (zeta.1 + delta.0 + zeta.0 + delta.1)/2
   nu.0 <- delta.0/tau
   nu.1 <- delta.1/tau
@@ -435,29 +413,27 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
 
   if (!is.null(model.y$family)){
     if ( model.y$family$link=="logit"){
-      #ORdelta.1 <- t(as.matrix(apply(or1, 2, mean)))
-      #ORdelta.0 <- t(as.matrix(apply(or2, 2, mean)))
-      #ORzeta.1 <- t(as.matrix(apply(or3, 2, mean)))
-      #ORzeta.0 <- t(as.matrix(apply(or4, 2, mean)))
-      ORtau <- (ORzeta.1*ORdelta.0 + ORzeta.0*ORdelta.1)/2
-      ORnu.1 <- ORdelta.1/ORtau
-      #ORtau <- (ORzeta.1*ORdelta.0 + ORzeta.0*ORdelta.1)/2
-      ORnu.0 <- ORdelta.0/ORtau
+      ORdelta.1 <- OR[ , 1] # joint mediated effect ORdelta(1)
+      ORdelta.0 <- OR[ , 2] # joint mediated effect ORdelta(0)
+      ORzeta.1  <- OR[ , 3] # direct effect ORzeta(1)
+      ORzeta.0  <- OR[ , 4] # direct effect ORzeta(0)
 
+      ORtau <- (ORzeta.1*ORdelta.0 + ORzeta.0*ORdelta.1)/2
+      ORnu.1 <- ORzeta.0*(ORdelta.1-1)/(ORzeta.0*ORdelta.1-1)
+      ORnu.0 <- ORzeta.1*(ORdelta.0-1)/(ORzeta.1*ORdelta.0-1)
 
       ORtau.coef <- mean(ORtau,na.rm=TRUE)
-
 
       ORdelta.avg <- (ORdelta.1 + ORdelta.0)/2
       ORnu.avg <- (ORnu.1 + ORnu.0)/2
       ORzeta.avg <- (ORzeta.1 + ORzeta.0)/2
 
-      ORd1 <- mean(ORdelta.1,na.rm=TRUE)
-      ORn1 <- median(ORnu.1,na.rm=TRUE)
-      ORd0 <- mean(ORdelta.0,na.rm=TRUE)
-      ORn0 <- median(ORnu.0,na.rm=TRUE)
-      ORz1 <- mean(ORzeta.1,na.rm=TRUE)
-      ORz0 <- mean(ORzeta.0,na.rm=TRUE)
+      ORd1 <- mean(ORdelta.1*is.finite(ORdelta.1),na.rm=TRUE)
+      ORn1 <- median(ORnu.1*is.finite(ORnu.1),na.rm=TRUE)
+      ORd0 <- mean(ORdelta.0*is.finite(ORdelta.0),na.rm=TRUE)
+      ORn0 <- median(ORnu.0*is.finite(ORnu.0),na.rm=TRUE)
+      ORz1 <- mean(ORzeta.1*is.finite(ORzeta.1),na.rm=TRUE)
+      ORz0 <- mean(ORzeta.0*is.finite(ORzeta.0),na.rm=TRUE)
 
       ORd.avg <- (ORd0 + ORd1)/2
       ORz.avg <- (ORz0 + ORz1)/2
@@ -471,24 +447,27 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       logORzeta.1 <- log(ORzeta.1)
       logORzeta.0 <- log(ORzeta.0)
 
-      logORtau.coef <- mean(logORtau,na.rm=TRUE)
+      logORtau.coef <- mean(logORtau*is.finite(logORtau),na.rm=TRUE)
       logORnu.avg <- (logORnu.1 + logORnu.0)/2
-      logORn0 <- median(logORnu.0,na.rm=TRUE)
-      logORn1 <- median(logORnu.1,na.rm=TRUE)
+      logORn0 <- median(logORnu.0*is.finite(logORnu.0),na.rm=TRUE)
+      logORn1 <- median(logORnu.1*is.finite(logORnu.1),na.rm=TRUE)
       logORn.avg <- (logORn0 + logORn1)/2
 
       logORdelta.avg <- (logORdelta.1 + logORdelta.0)/2
       logORzeta.avg <- (logORzeta.1 + logORzeta.0)/2
-      logORd0 <- mean(logORdelta.0,na.rm=TRUE)
-      logORd1 <- mean(logORdelta.1,na.rm=TRUE)
-      logORz1 <- mean(logORzeta.1,na.rm=TRUE)
-      logORz0 <- mean(logORzeta.0,na.rm=TRUE)
-      logORtau.coef <- mean(logORtau,na.rm=TRUE)
+      logORd0 <- mean(logORdelta.0*is.finite(logORdelta.0),na.rm=TRUE)
+      logORd1 <- mean(logORdelta.1*is.finite(logORdelta.1),na.rm=TRUE)
+      logORz1 <- mean(logORzeta.1*is.finite(logORzeta.1),na.rm=TRUE)
+      logORz0 <- mean(logORzeta.0*is.finite(logORzeta.0),na.rm=TRUE)
+      logORtau.coef <- mean(logORtau*is.finite(logORtau),na.rm=TRUE)
       logORd.avg <- (logORd0 + logORd1)/2
       logORz.avg <- (logORz0 + logORz1)/2
     }}
 
   if (NM!=1){
+    et5 <- effect.tmp.NM[, ,1,] # mediated effect delta(1)
+    et6 <- effect.tmp.NM[, ,2,] # mediated effect delta(0)
+
     delta.1.NM <- t((apply(et5, c(2,3), mean)))
     delta.0.NM <- t(as.matrix(apply(et6, c(2,3), mean)))
 
@@ -505,9 +484,11 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
 
     if (!is.null(model.y$family)){
       if (model.y$family$link=="logit"){
+        ORdelta.1.NM <- OR.NM[ ,1,] # mediated effect ORdelta(1)
+        ORdelta.0.NM <- OR.NM[ ,2,] # mediated effect ORdelta(0)
 
-        ORnu.0.NM <- ORdelta.0.NM/array(ORtau,dim=c(J,NM))
-        ORnu.1.NM <- ORdelta.1.NM/array(ORtau,dim=c(J,NM))
+        ORnu.0.NM <- array(ORzeta.1,dim=c(J,NM))*(ORdelta.0.NM-1)/(array(ORzeta.1,dim=c(J,NM))*ORdelta.0.NM-1)
+        ORnu.1.NM <- array(ORzeta.0,dim=c(J,NM))*(ORdelta.1.NM-1)/(array(ORzeta.0,dim=c(J,NM))*ORdelta.1.NM-1)
         ORdelta.avg.NM <- (ORdelta.1.NM + ORdelta.0.NM)/2
         ORnu.avg.NM <- (ORnu.1.NM + ORnu.0.NM)/2
         ORd0.NM <- apply(ORdelta.0.NM,2,mean,na.rm=TRUE)
@@ -523,8 +504,8 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
         logORnu.1.NM <- logORdelta.1.NM/array(logORtau,dim=c(J,NM))
 
         logORnu.avg.NM <- (logORnu.1.NM + logORnu.0.NM)/2
-        logORn0.NM <- apply(logORdelta.0.NM/logORtau.coef,2,median,na.rm=TRUE)
-        logORn1.NM <- apply(logORdelta.1.NM/logORtau.coef,2,median,na.rm=TRUE)
+        logORn0.NM <- apply(logORdelta.0.NM/logORtau.coef,2,mean,na.rm=TRUE)
+        logORn1.NM <- apply(logORdelta.1.NM/logORtau.coef,2,mean,na.rm=TRUE)
         logORn.avg.NM <- (logORn0.NM + logORn1.NM)/2
 
         logORdelta.avg.NM <- (logORdelta.1.NM + logORdelta.0.NM)/2
@@ -582,16 +563,16 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       ORz.avg.ci <- quantile(ORzeta.avg, c(low, high), na.rm = TRUE)
       ORn.avg.ci <- quantile(ORnu.avg, c(low, high), na.rm = TRUE)
 
-      ORd0.p <- pval(ORdelta.0, ORd0)
-      ORd1.p <- pval(ORdelta.1, ORd1)
-      ORd.avg.p <- pval(ORdelta.avg, ORd.avg)
-      ORz0.p <- pval(ORzeta.0, ORz0)
-      ORz1.p <- pval(ORzeta.1, ORz1)
-      ORz.avg.p <- pval(ORzeta.avg, ORz.avg)
+      ORd0.p <- pval(ORdelta.0, ORd0,seu=1)
+      ORd1.p <- pval(ORdelta.1, ORd1,seu=1)
+      ORd.avg.p <- pval(ORdelta.avg, ORd.avg,seu=1)
+      ORz0.p <- pval(ORzeta.0, ORz0,seu=1)
+      ORz1.p <- pval(ORzeta.1, ORz1,seu=1)
+      ORz.avg.p <- pval(ORzeta.avg, ORz.avg,seu=1)
       ORn0.p <- pval(ORnu.0, ORn0)
       ORn1.p <- pval(ORnu.1, ORn1)
       ORn.avg.p <- pval(ORnu.avg, ORn.avg)
-      ORtau.p <- pval(ORtau, ORtau.coef)
+      ORtau.p <- pval(ORtau, ORtau.coef,seu=1)
 
       logORn0.ci <- quantile(logORnu.0, c(low, high), na.rm = TRUE)
       logORn1.ci <- quantile(logORnu.1, c(low, high), na.rm = TRUE)
@@ -645,32 +626,32 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
         logORd0.p.NM <- logORd1.p.NM <- logORd.avg.p.NM <- logORn0.p.NM <- logORn1.p.NM <- logORn.avg.p.NM <- rep(NA,NM)
         # logORd0.p.NM <- logORd1.p.NM <- logORd.avg.p.NM <- logn0.p.NM <- logn1.p.NM <- logn.avg.p.NM <- rep(NA,NM)
         for (nm in 1:NM){
-          ORd0.ci.NM[nm,] <- quantile(ORdelta.0.NM[nm,], c(low, high), na.rm = TRUE)
-          ORd1.ci.NM[nm,] <- quantile(ORdelta.1.NM[nm,], c(low, high), na.rm = TRUE)
-          ORn0.ci.NM[nm,] <- quantile(ORnu.0.NM[nm,], c(low, high), na.rm = TRUE)
-          ORn1.ci.NM[nm,] <- quantile(ORnu.1.NM[nm,], c(low, high), na.rm = TRUE)
-          ORd.avg.ci.NM[nm,] <- quantile(ORdelta.avg.NM[nm,], c(low, high), na.rm = TRUE)
-          ORn.avg.ci.NM[nm,] <- quantile(ORnu.avg.NM[nm,], c(low, high), na.rm = TRUE)
+          ORd0.ci.NM[nm,] <- quantile(ORdelta.0.NM[,nm], c(low, high), na.rm = TRUE)
+          ORd1.ci.NM[nm,] <- quantile(ORdelta.1.NM[,nm], c(low, high), na.rm = TRUE)
+          ORn0.ci.NM[nm,] <- quantile(ORnu.0.NM[,nm], c(low, high), na.rm = TRUE)
+          ORn1.ci.NM[nm,] <- quantile(ORnu.1.NM[,nm], c(low, high), na.rm = TRUE)
+          ORd.avg.ci.NM[nm,] <- quantile(ORdelta.avg.NM[,nm], c(low, high), na.rm = TRUE)
+          ORn.avg.ci.NM[nm,] <- quantile(ORnu.avg.NM[,nm], c(low, high), na.rm = TRUE)
 
-          ORd0.p.NM[nm] <- pval(ORdelta.0.NM[nm,], ORd0.NM[nm])
-          ORd1.p.NM[nm] <- pval(ORdelta.1.NM[nm,], ORd1.NM[nm])
-          ORd.avg.p.NM[nm] <- pval(ORdelta.avg.NM[nm,], ORd.avg.NM[nm])
-          ORn0.p.NM[nm] <- pval(ORnu.0.NM[nm,], ORn0.NM[nm])
-          ORn1.p.NM[nm] <- pval(ORnu.1.NM[nm,], ORn1.NM[nm])
-          ORn.avg.p.NM[nm] <- pval(ORnu.avg.NM[nm,], ORn.avg.NM[nm])
+          ORd0.p.NM[nm] <- pval(ORdelta.0.NM[,nm], ORd0.NM[nm],seu=1)
+          ORd1.p.NM[nm] <- pval(ORdelta.1.NM[,nm], ORd1.NM[nm],seu=1)
+          ORd.avg.p.NM[nm] <- pval(ORdelta.avg.NM[,nm], ORd.avg.NM[nm],seu=1)
+          ORn0.p.NM[nm] <- pval(ORnu.0.NM[,nm], ORn0.NM[nm])
+          ORn1.p.NM[nm] <- pval(ORnu.1.NM[,nm], ORn1.NM[nm])
+          ORn.avg.p.NM[nm] <- pval(ORnu.avg.NM[,nm], ORn.avg.NM[nm])
 
-          logORd0.ci.NM[nm,] <- quantile(logORdelta.0.NM[nm,], c(low, high), na.rm = TRUE)
-          logORd1.ci.NM[nm,] <- quantile(logORdelta.1.NM[nm,], c(low, high), na.rm = TRUE)
-          logORd.avg.ci.NM[nm,] <- quantile(logORdelta.avg.NM[nm,], c(low, high), na.rm = TRUE)
-          logORn0.ci.NM[nm,] <- quantile(logORnu.0.NM[nm,], c(low, high), na.rm = TRUE)
-          logORn1.ci.NM[nm,] <- quantile(logORnu.1.NM[nm,], c(low, high), na.rm = TRUE)
-          logORn.avg.ci.NM[nm,] <- quantile(logORnu.avg.NM[nm,], c(low, high), na.rm = TRUE)
-          logORd0.p.NM[nm] <- pval(logORdelta.0.NM[nm,], logORd0.NM[nm])
-          logORd1.p.NM[nm] <- pval(ORdelta.1.NM[nm,], logORd1.NM[nm])
-          logORd.avg.p.NM[nm] <- pval(logORdelta.avg.NM[nm,], logORd.avg.NM[nm])
-          logORn0.p.NM[nm] <- pval(logORnu.0.NM[nm,], logORn0.NM[nm])
-          logORn1.p.NM[nm] <- pval(logORnu.1.NM[nm,], logORn1.NM[nm])
-          logORn.avg.p.NM[nm] <- pval(logORnu.avg.NM[nm,], logORn.avg.NM[nm])
+          logORd0.ci.NM[nm,] <- quantile(logORdelta.0.NM[,nm], c(low, high), na.rm = TRUE)
+          logORd1.ci.NM[nm,] <- quantile(logORdelta.1.NM[,nm], c(low, high), na.rm = TRUE)
+          logORd.avg.ci.NM[nm,] <- quantile(logORdelta.avg.NM[,nm], c(low, high), na.rm = TRUE)
+          logORn0.ci.NM[nm,] <- quantile(logORnu.0.NM[,nm], c(low, high), na.rm = TRUE)
+          logORn1.ci.NM[nm,] <- quantile(logORnu.1.NM[,nm], c(low, high), na.rm = TRUE)
+          logORn.avg.ci.NM[nm,] <- quantile(logORnu.avg.NM[,nm], c(low, high), na.rm = TRUE)
+          logORd0.p.NM[nm] <- pval(logORdelta.0.NM[,nm], logORd0.NM[nm])
+          logORd1.p.NM[nm] <- pval(logORdelta.1.NM[,nm], logORd1.NM[nm])
+          logORd.avg.p.NM[nm] <- pval(logORdelta.avg.NM[,nm], logORd.avg.NM[nm])
+          logORn0.p.NM[nm] <- pval(logORnu.0.NM[,nm], logORn0.NM[nm])
+          logORn1.p.NM[nm] <- pval(logORnu.1.NM[,nm], logORn1.NM[nm])
+          logORn.avg.p.NM[nm] <- pval(logORnu.avg.NM[,nm], logORn.avg.NM[nm])
         }
 
 
