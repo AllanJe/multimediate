@@ -25,20 +25,25 @@ CorCond=function(e,lmodel.m){
     }
   }
   sigmaestim=diag(Variance)
-
+  correstim=diag(1,NM)
   i=1
   l=1
   vcor=c()
+  vcov=c()
   while (i <NM){
     j=i+1
     for(k in j:NM){
-      sigmaestim[i,k]=sigmaestim[k,i]=weighted.mean(out[[l]]$Correlation.estim,out[[l]]$Proportion,na.rm = TRUE)
+      sigmaestim[i,k]=sigmaestim[k,i]=weighted.mean(out[[l]]$Covariance.estim,out[[l]]$Proportion,na.rm = TRUE)
+      vcov=c(vcov,weighted.mean(out[[l]]$Covariance.estim,out[[l]]$Proportion,na.rm = TRUE))
+      correstim[i,k]=correstim[k,i]=weighted.mean(out[[l]]$Correlation.estim,out[[l]]$Proportion,na.rm = TRUE)
       vcor=c(vcor,weighted.mean(out[[l]]$Correlation.estim,out[[l]]$Proportion,na.rm = TRUE))
       l=l+1
     }
     i=i+1
   }
   out[["sigmaestim"]]=sigmaestim
+  out[["vcov"]]=vcov
+  out[["correstim"]]=correstim
   out[["vcor"]]=vcor
   return(out)
 }
