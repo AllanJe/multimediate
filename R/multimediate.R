@@ -56,11 +56,14 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   if (correlated==TRUE){
     mcov=CorCond(e=10^(-10),lmodel.m)
     error=mvrnorm(n=N*J,mu=rep(0,NM),mcov$sigmaestim,tol=100)
+    cov=mcov$sigmaestim
   }
   else{
     error=mvrnorm(n=N*J,mu=rep(0,NM),diag(rep(1,NM)))
+    cov=diag(rep(1,NM))
   }
   YModel = rmvnorm(J, mean = c(coef(model.y),model.y$zeta), sigma = vcov(model.y))
+
 
   if ( !is.null(model.y$family$link)){
     if (model.y$family$link=="logit"){
@@ -422,18 +425,18 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       ORnu.1 <- ORzeta.0*(ORdelta.1-1)/(ORzeta.0*ORdelta.1-1)
       ORnu.0 <- ORzeta.1*(ORdelta.0-1)/(ORzeta.1*ORdelta.0-1)
 
-      ORtau.coef <- mean(ORtau,na.rm=TRUE)
+      ORtau.coef <- median(ORtau,na.rm=TRUE)
 
       ORdelta.avg <- (ORdelta.1 + ORdelta.0)/2
       ORnu.avg <- (ORnu.1 + ORnu.0)/2
       ORzeta.avg <- (ORzeta.1 + ORzeta.0)/2
 
-      ORd1 <- mean(ORdelta.1*is.finite(ORdelta.1),na.rm=TRUE)
+      ORd1 <- median(ORdelta.1*is.finite(ORdelta.1),na.rm=TRUE)
       ORn1 <- median(ORnu.1*is.finite(ORnu.1),na.rm=TRUE)
-      ORd0 <- mean(ORdelta.0*is.finite(ORdelta.0),na.rm=TRUE)
+      ORd0 <- median(ORdelta.0*is.finite(ORdelta.0),na.rm=TRUE)
       ORn0 <- median(ORnu.0*is.finite(ORnu.0),na.rm=TRUE)
-      ORz1 <- mean(ORzeta.1*is.finite(ORzeta.1),na.rm=TRUE)
-      ORz0 <- mean(ORzeta.0*is.finite(ORzeta.0),na.rm=TRUE)
+      ORz1 <- median(ORzeta.1*is.finite(ORzeta.1),na.rm=TRUE)
+      ORz0 <- median(ORzeta.0*is.finite(ORzeta.0),na.rm=TRUE)
 
       ORd.avg <- (ORd0 + ORd1)/2
       ORz.avg <- (ORz0 + ORz1)/2
@@ -447,7 +450,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       logORzeta.1 <- log(ORzeta.1)
       logORzeta.0 <- log(ORzeta.0)
 
-      logORtau.coef <- mean(logORtau*is.finite(logORtau),na.rm=TRUE)
+      logORtau.coef <- median(logORtau*is.finite(logORtau),na.rm=TRUE)
       logORnu.avg <- (logORnu.1 + logORnu.0)/2
       logORn0 <- median(logORnu.0*is.finite(logORnu.0),na.rm=TRUE)
       logORn1 <- median(logORnu.1*is.finite(logORnu.1),na.rm=TRUE)
@@ -455,11 +458,11 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
 
       logORdelta.avg <- (logORdelta.1 + logORdelta.0)/2
       logORzeta.avg <- (logORzeta.1 + logORzeta.0)/2
-      logORd0 <- mean(logORdelta.0*is.finite(logORdelta.0),na.rm=TRUE)
-      logORd1 <- mean(logORdelta.1*is.finite(logORdelta.1),na.rm=TRUE)
-      logORz1 <- mean(logORzeta.1*is.finite(logORzeta.1),na.rm=TRUE)
-      logORz0 <- mean(logORzeta.0*is.finite(logORzeta.0),na.rm=TRUE)
-      logORtau.coef <- mean(logORtau*is.finite(logORtau),na.rm=TRUE)
+      logORd0 <- median(logORdelta.0*is.finite(logORdelta.0),na.rm=TRUE)
+      logORd1 <- median(logORdelta.1*is.finite(logORdelta.1),na.rm=TRUE)
+      logORz1 <- median(logORzeta.1*is.finite(logORzeta.1),na.rm=TRUE)
+      logORz0 <- median(logORzeta.0*is.finite(logORzeta.0),na.rm=TRUE)
+      logORtau.coef <- median(logORtau*is.finite(logORtau),na.rm=TRUE)
       logORd.avg <- (logORd0 + logORd1)/2
       logORz.avg <- (logORz0 + logORz1)/2
     }}
@@ -487,12 +490,12 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
         ORdelta.1.NM <- OR.NM[ ,1,] # mediated effect ORdelta(1)
         ORdelta.0.NM <- OR.NM[ ,2,] # mediated effect ORdelta(0)
 
-        ORnu.0.NM <- array(ORzeta.1,dim=c(J,NM))*(ORdelta.0.NM-1)/(array(ORzeta.1,dim=c(J,NM))*ORdelta.0.NM-1)
-        ORnu.1.NM <- array(ORzeta.0,dim=c(J,NM))*(ORdelta.1.NM-1)/(array(ORzeta.0,dim=c(J,NM))*ORdelta.1.NM-1)
+        ORnu.0.NM <- array(ORzeta.1,dim=c(J,NM))*(ORdelta.0.NM-1)/(array(ORzeta.1*ORdelta.0,dim=c(J,NM))-1)
+        ORnu.1.NM <- array(ORzeta.0,dim=c(J,NM))*(ORdelta.1.NM-1)/(array(ORzeta.0*ORdelta.1,dim=c(J,NM))-1)
         ORdelta.avg.NM <- (ORdelta.1.NM + ORdelta.0.NM)/2
         ORnu.avg.NM <- (ORnu.1.NM + ORnu.0.NM)/2
-        ORd0.NM <- apply(ORdelta.0.NM,2,mean,na.rm=TRUE)
-        ORd1.NM <- apply(ORdelta.1.NM,2,mean,na.rm=TRUE)
+        ORd0.NM <- apply(ORdelta.0.NM,2,median,na.rm=TRUE)
+        ORd1.NM <- apply(ORdelta.1.NM,2,median,na.rm=TRUE)
         ORn0.NM <- apply(ORnu.0.NM,2,median,na.rm=TRUE)
         ORn1.NM <- apply(ORnu.1.NM,2,median,na.rm=TRUE)
         ORd.avg.NM <- (ORd0.NM + ORd1.NM)/2
@@ -504,13 +507,13 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
         logORnu.1.NM <- logORdelta.1.NM/array(logORtau,dim=c(J,NM))
 
         logORnu.avg.NM <- (logORnu.1.NM + logORnu.0.NM)/2
-        logORn0.NM <- apply(logORdelta.0.NM/logORtau.coef,2,mean,na.rm=TRUE)
-        logORn1.NM <- apply(logORdelta.1.NM/logORtau.coef,2,mean,na.rm=TRUE)
+        logORn0.NM <- apply(logORdelta.0.NM/logORtau.coef,2,median,na.rm=TRUE)
+        logORn1.NM <- apply(logORdelta.1.NM/logORtau.coef,2,median,na.rm=TRUE)
         logORn.avg.NM <- (logORn0.NM + logORn1.NM)/2
 
         logORdelta.avg.NM <- (logORdelta.1.NM + logORdelta.0.NM)/2
-        logORd0.NM <- apply(logORdelta.0.NM,2,mean,na.rm=TRUE)
-        logORd1.NM <- apply(logORdelta.1.NM,2,mean,na.rm=TRUE)
+        logORd0.NM <- apply(logORdelta.0.NM,2,median,na.rm=TRUE)
+        logORd1.NM <- apply(logORdelta.1.NM,2,median,na.rm=TRUE)
         logORd.avg.NM <- (logORd0.NM + logORd1.NM)/2
       }}
 
@@ -669,7 +672,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                 conf.level = conf.level,
                 model.y = model.y, model.m = lmodel.m,
                 control.value = control.value, treat.value = treat.value,
-                nobs = N, sims = J)
+                nobs = N, sims = J,cov=cov)
     if (!is.null(model.y$family)){
       if (model.y$family$link=="logit"){
         out <- list(d0 = d0, d1 = d1, d0.ci = d0.ci, d1.ci = d1.ci, d0.p = d0.p, d1.p = d1.p, d0.sims = delta.0,d1.sims = delta.1,
@@ -683,7 +686,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                     conf.level = conf.level,
                     model.y = model.y, model.m = lmodel.m,
                     control.value = control.value, treat.value = treat.value,
-                    nobs = N, sims = J,
+                    nobs = N, sims = J,cov=cov,
                     ORd0 = ORd0, ORd1 = ORd1, ORd0.ci = ORd0.ci, ORd1.ci = ORd1.ci, ORd0.p = ORd0.p, ORd1.p = ORd1.p, ORd0.sims = ORdelta.0,ORd1.sims = ORdelta.1,
                     ORz0 = ORz0, ORz1 = ORz1, ORz0.ci = ORz0.ci,ORz1.ci = ORz1.ci, ORz0.p = ORz0.p, ORz1.p = ORz1.p, ORz0.sims = ORzeta.0, ORz1.sims = ORzeta.1,
                     ORn0 = ORn0, ORn1 = ORn1, ORn0.ci = ORn0.ci, ORn1.ci = ORn1.ci, ORn0.p = ORn0.p, ORn1.p = ORn1.p, ORn0.sims = ORnu.0, ORn1.sims = ORnu.1,
@@ -716,7 +719,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                 conf.level = conf.level,
                 model.y = model.y, model.m = lmodel.m,
                 control.value = control.value, treat.value = treat.value,
-                nobs = N, sims = J)
+                nobs = N, sims = J,cov=cov)
 
     if (!is.null(model.y$family)){
       if (model.y$family$link=="logit"){
@@ -735,7 +738,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                     conf.level = conf.level,
                     model.y = model.y, model.m = lmodel.m,
                     control.value = control.value, treat.value = treat.value,
-                    nobs = N, sims = J,
+                    nobs = N, sims = J,cov=cov,
                     ORd0 = ORd0, ORd1 = ORd1, ORd0.ci = ORd0.ci, ORd1.ci = ORd1.ci, ORd0.p = ORd0.p, ORd1.p = ORd1.p, ORd0.sims = ORdelta.0,ORd1.sims = ORdelta.1,
                     ORd0.NM = ORd0.NM, ORd1.NM = ORd1.NM, ORd0.ci.NM = ORd0.ci.NM, ORd1.ci.NM = ORd1.ci.NM, ORd0.p.NM = ORd0.p.NM, ORd1.p.NM = ORd1.p.NM, ORd0.sims.NM = ORdelta.0.NM, ORd1.sims.NM = ORdelta.1.NM,
                     ORz0 = ORz0, ORz1 = ORz1, ORz0.ci = ORz0.ci,ORz1.ci = ORz1.ci, ORz0.p = ORz0.p, ORz1.p = ORz1.p, ORz0.sims = ORzeta.0, ORz1.sims = ORzeta.1,
