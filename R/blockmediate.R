@@ -11,6 +11,8 @@
 #'@param J number of Monte Carlo draws for quasi-Bayesian approximation.
 #'@param conf.level level of the returned two-sided confidence intervals. Default is to return the 2.5 and 97.5 percentiles of the simulated quantities.
 #'@param clust vector of length equal to the number of mediator. The order of the numbers corresponds to the order of the mediators in lmodel.m and the mediators belonging to the same cluster have the same number. Default is 'NULL', clusters are define using clustering spectral.
+#'@param seuil threshold correlation value for spectral clustering. Default is 0.
+#'
 #'
 #'@return blockmediate returns an object of class "bm", a list that contains the components listed below.
 #' The function summary (i.e., summary.bm) can be used to obtain a table of the results.
@@ -19,7 +21,7 @@
 #' @importFrom MASS mvrnorm
 #' @importFrom mvtnorm rmvnorm
 
-blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95,clust=NULL){
+blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95,clust=NULL,seuil=0){
   N=dim(lmodel.m[[1]]$model)[1]
   NUM=length(lmodel.m)
 
@@ -31,20 +33,21 @@ blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=100
   }
 
   mcov=CorCond(e=10^(-10),lmodel.m)
-  Sigma=mcov$sigmaestim
 
+  Corre=mcov$correstim
   if(is.null(clust)){
+    #clust=SpecClust(mcov$correstim,seuil)
     for(s in 1:NUM){
       for(d in 1:NUM){
-        if(abs(Sigma[s,d])>=0.99){
-          Sigma[s,d]=(-1/2)*log(1-0.99^2)}
+        if(abs(Corre[s,d])>=0.99){
+          Corre[s,d]=(-1/2)*log(1-0.99^2)}
         else{
-          Sigma[s,d]=(-1/2)*log(1-Sigma[s,d]^2)
+          Corre[s,d]=(-1/2)*log(1-Corre[s,d]^2)
         }
       }}
 
-    D <- diag(apply(Sigma, 1, sum))
-    UL <- D - Sigma
+    D <- diag(apply(Corre, 1, sum))
+    UL <- D - Corre
     round(UL,1)
     evL <- eigen(UL, symmetric=TRUE)
     par(mfrow=c(1,1))
@@ -54,15 +57,16 @@ blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=100
     clust=kmeans(Z,k,nstart=3)$cluster
   }
   NM=max(clust)
+  Sigma=Sigma_adjusted=mcov$sigmaestim
 
   for(i in 1:NUM){
     for(j in 1:NUM){
       if (clust[i]!=clust[j]){
-        Sigma[i,j]=0
+        Sigma_adjusted[i,j]=0
       }
     }
   }
-  error=mvrnorm(n=N*J,mu=rep(0,NUM),Sigma)
+  error=mvrnorm(n=N*J,mu=rep(0,NUM),Sigma=Sigma_adjusted,tol=100)
 
 
 
@@ -147,7 +151,7 @@ blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=100
 
   }
 
-  effect.tmp.NM=array(NA, dim = c(n, J, 2, NM))
+  effect.tmp.NM=array(NA, dim = c(N, J, 2, NM))
   effect.tmp=array(NA, dim = c(N, J, 4))
   OR.NM=array(NA, dim = c(J, 2, NM))
   OR=array(NA, dim = c(J, 4))
@@ -664,7 +668,7 @@ blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=100
                 conf.level = conf.level,
                 model.y = model.y, model.m = lmodel.m,
                 control.value = control.value, treat.value = treat.value,
-                nobs = N, sims = J,clust=clust)
+                nobs = N, sims = J,clust=clust,sigma=Sigma,sigma_adjusted=Sigma_adjusted,corr=mcov$correstim)
     if (!is.null(model.y$family)){
       if (model.y$family$link=="logit"){
         out <- list(d0 = d0, d1 = d1, d0.ci = d0.ci, d1.ci = d1.ci, d0.p = d0.p, d1.p = d1.p, d0.sims = delta.0,d1.sims = delta.1,
@@ -692,7 +696,7 @@ blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=100
                     logORtau.coef = logORtau.coef, logORtau.ci = logORtau.ci, logORtau.p = logORtau.p, logORtau.sims = logORtau,
                     logORd.avg = logORd.avg, logORd.avg.p = logORd.avg.p, logORd.avg.ci = logORd.avg.ci, logORd.avg.sims = logORdelta.avg,
                     logORz.avg = logORz.avg, logORz.avg.p = logORz.avg.p, logORz.avg.ci = logORz.avg.ci, logORz.avg.sims = logORzeta.avg,
-                    logORn.avg = logORn.avg, logORn.avg.p = logORn.avg.p, logORn.avg.ci = logORn.avg.ci, logORn.avg.sims = logORnu.avg,clust=clust)
+                    logORn.avg = logORn.avg, logORn.avg.p = logORn.avg.p, logORn.avg.ci = logORn.avg.ci, logORn.avg.sims = logORnu.avg,clust=clust,sigma=Sigma,sigma_adjusted=Sigma_adjusted,corr=mcov$correstim)
       }}
   }
   else {
@@ -711,7 +715,7 @@ blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=100
                 conf.level = conf.level,
                 model.y = model.y, model.m = lmodel.m,
                 control.value = control.value, treat.value = treat.value,
-                nobs = N, sims = J,clust=clust)
+                nobs = N, sims = J,clust=clust,sigma=Sigma,sigma_adjusted=Sigma_adjusted,corr=mcov$correstim)
 
     if (!is.null(model.y$family)){
       if (model.y$family$link=="logit"){
@@ -752,7 +756,7 @@ blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=100
                     logORd.avg.NM = logORd.avg.NM, logORd.avg.p.NM = logORd.avg.p.NM, logORd.avg.ci.NM = logORd.avg.ci.NM, logORd.avg.sims.NM = logORdelta.avg.NM,
                     logORz.avg = logORz.avg, logORz.avg.p = logORz.avg.p, logORz.avg.ci = logORz.avg.ci, logORz.avg.sims = logORzeta.avg,
                     logORn.avg = logORn.avg, logORn.avg.p = logORn.avg.p, logORn.avg.ci = logORn.avg.ci, logORn.avg.sims = logORnu.avg,
-                    logORn.avg.NM = logORn.avg.NM, logORn.avg.p.NM = logORn.avg.p.NM, logORn.avg.ci.NM = logORn.avg.ci.NM, logORn.avg.sims.NM = logORnu.avg.NM,clust=clust)
+                    logORn.avg.NM = logORn.avg.NM, logORn.avg.p.NM = logORn.avg.p.NM, logORn.avg.ci.NM = logORn.avg.ci.NM, logORn.avg.sims.NM = logORnu.avg.NM,clust=clust,sigma=Sigma,sigma_adjusted=Sigma_adjusted,corr=mcov$correstim)
       }}
   }
   class(out) <- "bm"
