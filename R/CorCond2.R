@@ -11,7 +11,8 @@ CorCond2=function(e,lmodel){
   if(is.Lm.Mi & is.Lm.Mj){
     Estim=data.frame(NA)
     Estim$Proportion=1
-    Estim$Correlation.estim=cov(lmodel[[1]]$residuals,lmodel[[2]]$residuals)
+    Estim$Covariance.estim=cov(lmodel[[1]]$residuals,lmodel[[2]]$residuals)
+    Estim$Correlation.estim=cor(lmodel[[1]]$residuals,lmodel[[2]]$residuals)
   }
 
   else{
@@ -170,10 +171,11 @@ CorCond2=function(e,lmodel){
       }
       Value=c(Value,Valuetf2)
       Proportion=c(Proportion,dim(datai)[1]/dim(data)[1])
+      Covariance.estim=c(Covariance.estim,round(covMiMj,4))
       Correlation.estim=c(Correlation.estim,round(cor,4))
     }
 
-    Estim=data.frame(Value,Proportion,Correlation.estim)
+    Estim=data.frame(Value,Proportion,Covariance.estim,Correlation.estim)
 
   }
 
