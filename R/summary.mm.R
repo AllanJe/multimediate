@@ -3,7 +3,7 @@
 #' "summary.mm" is used to display the results of the mediation analyzes done with "multimediate".
 #'
 #'
-#' @param object element of the class "multimediate".
+#' @param object element of the class "mm".
 #' @param opt a character string indicating the details of the analysis "navg" for the average causal effects for t=0,1 and "avg"  for the average causal effects.
 #' @param logit a character string indicating, when the outcome is binary, the scale of the average causal effects. "effects" for average causal effects, " OR" average causal effects on OR scale, "logOR" average causal effects on logOR scale and "all" for all scale.
 #' @param ... additional arguments affecting the summary produced
