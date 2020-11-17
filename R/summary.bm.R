@@ -19,7 +19,7 @@ summary.bm=function(object,opt="navg",logit="all",...){
     nom.avg=c("ACME.joint","PM.joint",paste(c("ACME.","PM."),"Block.",rep(1:max(object$clust),each=2),sep=""),"ADE","Total Effect")
 
 
-  if (length(object$mediator)>1){
+  if (max(object$clust)>1){
     navg=data.frame("."        =nom.navg,
                     Estimation=round(c(object$d1,object$n1,object$d0,object$n0,triout.NM(object$d1.NM,object$n1.NM,object$d0.NM,object$n0.NM),object$z1,object$z0,object$tau.coef),4),
                     IC.inf    =round(c(object$d1.ci[1],object$n1.ci[1],object$d0.ci[1],object$n0.ci[1],triout.ci.NM(object$d1.ci.NM,object$n1.ci.NM,object$d0.ci.NM,object$n0.ci.NM)[,1],object$z1.ci[1],object$z0.ci[1],object$tau.ci[1]),4),
