@@ -10,7 +10,14 @@ Description: Estimating various quantities for causal mediation analysis, includ
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: rmutil, MASS, mvtnorm, stats
+Imports: 
+    rmutil,
+    MASS, 
+    mvtnorm, 
+    stats, 
+    tsutils, 
+    gglasso, 
+    graphics
 Suggests: 
     knitr,
     rmarkdown
