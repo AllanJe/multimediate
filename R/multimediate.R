@@ -57,6 +57,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
     mcov=CorCond(e=10^(-10),lmodel.m)
     error=mvrnorm(n=N*J,mu=rep(0,NM),mcov$sigmaestim,tol=100)
     cov=mcov$sigmaestim
+    cor=mcov$correstim
   }
   else{
     error=mvrnorm(n=N*J,mu=rep(0,NM),diag(rep(1,NM)))
@@ -672,7 +673,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                 conf.level = conf.level,
                 model.y = model.y, model.m = lmodel.m,
                 control.value = control.value, treat.value = treat.value,
-                nobs = N, sims = J,cov=cov)
+                nobs = N, sims = J,cov=cov,cor=cor)
     if (!is.null(model.y$family)){
       if (model.y$family$link=="logit"){
         out <- list(d0 = d0, d1 = d1, d0.ci = d0.ci, d1.ci = d1.ci, d0.p = d0.p, d1.p = d1.p, d0.sims = delta.0,d1.sims = delta.1,
@@ -686,7 +687,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                     conf.level = conf.level,
                     model.y = model.y, model.m = lmodel.m,
                     control.value = control.value, treat.value = treat.value,
-                    nobs = N, sims = J,cov=cov,
+                    nobs = N, sims = J,cov=cov,cor=cor,
                     ORd0 = ORd0, ORd1 = ORd1, ORd0.ci = ORd0.ci, ORd1.ci = ORd1.ci, ORd0.p = ORd0.p, ORd1.p = ORd1.p, ORd0.sims = ORdelta.0,ORd1.sims = ORdelta.1,
                     ORz0 = ORz0, ORz1 = ORz1, ORz0.ci = ORz0.ci,ORz1.ci = ORz1.ci, ORz0.p = ORz0.p, ORz1.p = ORz1.p, ORz0.sims = ORzeta.0, ORz1.sims = ORzeta.1,
                     ORn0 = ORn0, ORn1 = ORn1, ORn0.ci = ORn0.ci, ORn1.ci = ORn1.ci, ORn0.p = ORn0.p, ORn1.p = ORn1.p, ORn0.sims = ORnu.0, ORn1.sims = ORnu.1,
@@ -719,7 +720,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                 conf.level = conf.level,
                 model.y = model.y, model.m = lmodel.m,
                 control.value = control.value, treat.value = treat.value,
-                nobs = N, sims = J,cov=cov)
+                nobs = N, sims = J,cov=cov,cor=cor)
 
     if (!is.null(model.y$family)){
       if (model.y$family$link=="logit"){
@@ -738,7 +739,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
                     conf.level = conf.level,
                     model.y = model.y, model.m = lmodel.m,
                     control.value = control.value, treat.value = treat.value,
-                    nobs = N, sims = J,cov=cov,
+                    nobs = N, sims = J,cov=cov,cor=cor,
                     ORd0 = ORd0, ORd1 = ORd1, ORd0.ci = ORd0.ci, ORd1.ci = ORd1.ci, ORd0.p = ORd0.p, ORd1.p = ORd1.p, ORd0.sims = ORdelta.0,ORd1.sims = ORdelta.1,
                     ORd0.NM = ORd0.NM, ORd1.NM = ORd1.NM, ORd0.ci.NM = ORd0.ci.NM, ORd1.ci.NM = ORd1.ci.NM, ORd0.p.NM = ORd0.p.NM, ORd1.p.NM = ORd1.p.NM, ORd0.sims.NM = ORdelta.0.NM, ORd1.sims.NM = ORdelta.1.NM,
                     ORz0 = ORz0, ORz1 = ORz1, ORz0.ci = ORz0.ci,ORz1.ci = ORz1.ci, ORz0.p = ORz0.p, ORz1.p = ORz1.p, ORz0.sims = ORzeta.0, ORz1.sims = ORzeta.1,
