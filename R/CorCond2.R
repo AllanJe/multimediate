@@ -106,6 +106,7 @@ CorCond2=function(e,lmodel){
 
     Value=NULL
     Proportion=NULL
+    Covariance.estim=NULL
     Correlation.estim=NULL
     for (i in 1:dim(value)[1]){
       com = parse(text= paste(paste(names(datav),value[i,], sep = "=="), collapse = " & "))
