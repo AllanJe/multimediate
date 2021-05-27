@@ -17,9 +17,10 @@ Imports:
     stats, 
     tsutils, 
     gglasso, 
-    graphics
+    graphics,
+    car
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
