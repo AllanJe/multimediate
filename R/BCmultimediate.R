@@ -1,7 +1,7 @@
-#' multimediate
+#' BCmultimediate
 #'
 #'
-#' 'multimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimate average causal mediation effects on OR scale and logOR scale.
+#' 'BCmultimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimate average causal mediation effects on OR scale and logOR scale.
 #'
 #'@param lmodel.m list of fitted models object for mediators. Can be of class 'lm', 'polr','glm'.
 #'@param correlated a logical value. if 'FALSE' a identity matrix is used for the matrix of correlation of mediators; if 'TRUE' matrix of correlation is estimated. Default is 'FALSE'.
