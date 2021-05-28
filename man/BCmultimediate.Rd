@@ -2,7 +2,7 @@
 % Please edit documentation in R/BCmultimediate.R
 \name{BCmultimediate}
 \alias{BCmultimediate}
-\title{multimediate}
+\title{BCmultimediate}
 \usage{
 BCmultimediate(
   lmodel.m,
@@ -43,5 +43,5 @@ multimediate returns an object of class "mm", a list that contains the component
 The function summary (i.e., summary.mm) can be used to obtain a table of the results.
 }
 \description{
-'multimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimate average causal mediation effects on OR scale and logOR scale.
+'BCmultimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimate average causal mediation effects on OR scale and logOR scale.
 }
