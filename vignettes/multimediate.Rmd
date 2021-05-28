@@ -1,22 +1,23 @@
 ---
 title: "multimediate"
-header-includes:
-   - \usepackage[english]{babel}
-   - \usepackage{hyperref}
-   - \usepackage{bbm}
-   - \usepackage{subfigure}
-   - \usepackage{lscape}
-   - \usepackage{pifont}
-   - \newcommand{\xmark}{\ding{55}}
-   - \usepackage{pgf,tikz}
-   - \usepackage{amssymb,amsmath,mathenv,bbold}
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{how-to-use-multimediate}
+  %\VignetteIndexEntry{multimediate}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-This package is based on the work presented in \cite{jerolon_causal_2018} and the R package mediation presented in \cite{tingley_mediation_2014}. Models supported by our R function are shown in Table \ref{models}.
+## Multiple mediation analysis 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(multimediate)
+```
+This function is based on the work presented in Jerolon et al 2020 and the R package mediation presented in Tingley et al 2014. Models supported by our R function are shown in the following table.
 
 <table border="4" width="100%">
 <thead>
@@ -43,65 +44,19 @@ This package is based on the work presented in \cite{jerolon_causal_2018} and th
   </tr>
 </table>
 
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-```{r setup}
-library(multimediate)
-```
-
-# Data 1
-
-- Binary treatment T
-- Linear Outcome Y
-- Linear mediators $M_1,M_2,M_3$ 
-- Binary covariables $C_1,C_2,C_3$ 
+ 
+## Example 1
 
 <img src="data1.png">
 
-\begin{figure}[htp]
-\centering
-\begin{tikzpicture}
-% nodes %
-\node (M1)	at (3.5,3) 	{$M_1$};
-\node (M2)	at (3.5,2) 	{$M_2$};
-\node (M3)	at (3.5,1) 	{$M_3$};
-\node (C1) 	at (6,2) 	{$C_1$};
-\node (C2) 	at (7,3) 	{$C_2$};
-\node (C3) 	at (0,2) 	{$C_3$};
-\node (T) 		at (0,0) 	{$T$};
-\node (Y) 		at (7,0) 	{$Y$};
+We will do a mediation analysis with the following model.
 
-edges %
+- Binary treatment : $T$
+- Linear Outcome : $Y$
+- Linear mediators : $M_1,M_2,M_3$ 
+- Binary covariables : $C_1,C_2,C_3$ 
 
-\draw [->, line width =1] (M1) --  (Y);
-\draw [->, line width =1] (M2) --  (Y);
-\draw [->, line width =1] (M3) --  (Y);
-\draw [->, line width =1] (T) --  (Y);
-\draw [->, line width =1] (T) --  (M1);
-\draw [->, line width =1] (T) --  (M2);
-\draw [->, line width =1] (T) --  (M3);
-\draw [->, line width =1] (C1) --  (Y)  ;
-\draw [->, line width =1] (C1) --  (M1);
-\draw [->, line width =1] (C1) --  (M2);
-\draw [->, line width =1] (C1) --  (M3);
-\draw [->, line width =1] (C2) --  (Y);
-\draw [->, line width =1] (C2) --  (M1);
-\draw [->, line width =1, bend right=45] (C3) -- (Y);
-\draw [->, line width =1] (C3) --  (M2);
-\draw [<->, dashed, line width =1] (M1) -- (M2);
-\draw [<->, dashed, line width =1] (M2) -- (M3);
-\end{tikzpicture} 
-\caption{DAG of data 1}\label{fig1}
-\end{figure}
-
-
-
+In this first example the covariable $C_1$ is affecting all three mediators and the outcome $Y$; the covariable $C_2$ is affecting $M_1$ and the outcome $Y$; and the covariable $C_3$ is affecting $M_2$ and the outcome $Y$ as described in the diagramm.
 
 
 
@@ -118,6 +73,7 @@ data1$Outcome=as.numeric(data1$Outcome)
 summary(data1)
 ```
 
+The regression models are then as follows. 
 
 ```{r REG1}
 M1reg=lm(M1~ Treatment + C1 + C2, data=data1)
@@ -127,21 +83,20 @@ M3reg=lm(M3~ Treatment + C1     , data=data1)
 Yreg=lm(Outcome~ Treatment + M1 + M2 + M3 + C1 + C2 + C3, data=data1)
 ```
 
-\begin{table}[htp]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-$\tau$ & $\zeta$ & $\delta^Z$ & $\delta^1$ & $\delta^2$ & $\delta^3$     \\
-\hline
- 92 & 10 & 82 & 10 & 18 & 54   \\
-\hline
-\end{tabular}\caption{Values of causal effects in data 1} 
-\end{table}
+Once the regressions are done, we can then proceed to the multiple mediation analysis using the multimediate function. Then display the results with the summary function.
+
+```{r MED1}
+med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,
+                        treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
+
+summary(med.analysis,opt="avg")
+```
+
 
 <table>
 <thead>
         <tr>
-            <th colspan="6">Values of causal effects in data 1.</th>
+            <th colspan="6">True values of causal effects in data 1.</th>
         </tr>
     </thead>
     <tr>
@@ -152,55 +107,15 @@ $\tau$ & $\zeta$ & $\delta^Z$ & $\delta^1$ & $\delta^2$ & $\delta^3$     \\
   </tr>
 </table>
 
-```{r MED1}
-med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
-
-summary(med.analysis,opt="avg")
-```
-
-# Data 2 
-
-- Binary treatment $T$
-- Binary Outcome $Y$
-- Linear mediators $M_1,M_2,M_3$ 
-- Binary covariables $C_1,C_2,C_3$ 
-
+## Example 2 
 <img src="data2.png">
 
-\begin{figure}[htp]
-\centering
-\begin{tikzpicture}
-% nodes %
-\node (M1)	at (3.5,3) 	{$M_1$};
-\node (M2)	at (3.5,2) 	{$M_2$};
-\node (M3)	at (3.5,1) 	{$M_3$};
-\node (C1) 	at (8,4) 	{$C_1$};
-\node (C2) 	at (7,3) 	{$C_2$};
-\node (C3) 	at (6,2) 	{$C_3$};
-\node (T) 		at (0,0) 	{$T$};
-\node (Y) 		at (7,0) 	{$Y$};
+- Binary treatment : $T$
+- Binary Outcome : $Y$
+- Linear mediators : $M_1,M_2,M_3$ 
+- Binary covariables : $C_1,C_2,C_3$ 
 
-edges %
-\begin{scope}[every path/.style={->, line width= 1}, every node/.style={sloped, inner sep=1pt}]
-\draw (M1) --  (Y);
-\draw (M2) --  (Y);
-\draw (M3) --  (Y);
-\draw (T) --  (Y);
-\draw (T) --  (M1);
-\draw (T) --  (M2);
-\draw (T) --  (M3);
-\draw (C1) --  (M1);
-\draw (C1) --  (Y)  ;
-\draw (C2) --  (M2);
-\draw (C2) --  (Y);
-\draw (C3) --  (M3);
-\draw (C3) --  (Y);
-\draw [<->, dashed, line width =1] (M1) -- (M2);
-\draw [<->, dashed, line width =1] (M2) -- (M3);
-\end{scope}
-\end{tikzpicture} 
-\caption{DAG of data 2}\label{fig2}
-\end{figure}
+
 
 ```{r DATA2}
 data(data2)
@@ -224,21 +139,23 @@ M3reg=lm(M3~ Treatment + C3, data=data2)
 Yreg=glm(Outcome~ Treatment + M1 + M2 + M3 + C1 + C2 + C3, data=data2, family = binomial("logit"))
 ```
 
-\begin{table}[htp]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-$logOR^{\delta^1}$ & $logOR^{\delta^2}$ & $logOR^{\delta^3}$ & $logOR^{\delta^Z}$ & $logOR^{\zeta}$ & $logOR^{\tau}$ \\
-\hline
-0.195& 0.19 & 0.216  & 0.601  & 0.71 & 1.311 \\
-\hline
-\end{tabular}\caption{Values of causal effects in data 2} 
-\end{table}
+
+
+```{r MED2}
+med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,
+                        treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
+
+# summary(med.analysis,opt="avg",logit="effects")
+# summary(med.analysis,opt="avg",logit="all")
+# summary(med.analysis,opt="avg",logit="OR")
+summary(med.analysis,opt="avg",logit="logOR")
+```
+
 
 <table>
 <thead>
         <tr>
-            <th colspan="6">Values of causal effects in data 2 on log OR scale.</th>
+            <th colspan="6">True values of causal effects in data 2 on log OR scale.</th>
         </tr>
     </thead>
     <tr>
@@ -248,61 +165,16 @@ $logOR^{\delta^1}$ & $logOR^{\delta^2}$ & $logOR^{\delta^3}$ & $logOR^{\delta^Z}
     <td>1.311</td><td>0.71</td><td>0.601</td><td>0.195</td><td>0.19</td><td>0.216</td>
   </tr>
 </table>
-```{r MED2}
-med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
 
-# summary(med.analysis,opt="avg",logit="effects")
-# summary(med.analysis,opt="avg",logit="all")
-# summary(med.analysis,opt="avg",logit="OR")
-summary(med.analysis,opt="avg",logit="logOR")
-```
+## Example 3
 
-# Data 3
+<img src="data3.png">
 
 - Binary treatment $T$
 - Polytomic Outcome $Y$
 - Linear mediators $M_1,M_2,M_3$ 
 - Binary covariables $C_1,C_2,C_3$ 
 
-<img src="data3.png">
-
-\begin{figure}[htp]
-\centering
-\begin{tikzpicture}
-% nodes %
-\node (M1)	at (3.5,3) 	{$M_1$};
-\node (M2)	at (3.5,2) 	{$M_2$};
-\node (M3)	at (3.5,1) 	{$M_3$};
-\node (C1) 	at (6,3) 	{$C_1$};
-\node (C2) 	at (6,2) 	{$C_2$};
-\node (C3) 	at (0,2) 	{$C_3$};
-\node (T) 		at (0,0) 	{$T$};
-\node (Y) 		at (7,0) 	{$Y$};
-
-edges %
-\begin{scope}[every path/.style={->, line width= 1}, every node/.style={sloped, inner sep=1pt}]
-\draw (M1) --  (Y);
-\draw (M2) --  (Y);
-\draw (M3) --  (Y);
-\draw (T) --  (Y);
-\draw (T) --  (M1);
-\draw (T) --  (M2);
-\draw (T) --  (M3);
-\draw (C1) --  (Y)  ;
-\draw (C1) --  (M1);
-\draw (C1) --  (M2);
-\draw (C2) --  (Y);
-\draw (C2) --  (M2);
-\draw (C2) --  (M3);
-\draw (C3) to [bend right=45]  (Y);
-\draw (C3) --  (M1);
-\draw (C3) --  (M3);
-\draw [<->, dashed, line width =1] (M1) -- (M2);
-\draw [<->, dashed, line width =1] (M2) -- (M3);
-\end{scope}
-\end{tikzpicture} 
-\caption{DAG of data 3}\label{fig3}
-\end{figure}
 
 ```{r DATA3}
 data(data3)
@@ -328,16 +200,15 @@ Yreg=polr(Outcome ~ Treatment + M1 + M2 + M3 + C1 + C2 + C3 , data = data3, meth
 
 ```
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-$\tau$ & $\zeta$ & $\delta^Z$ & $\delta^1$ & $\delta^2$ & $\delta^3$  \\
-\hline
-2.21 & 0.5 & 1.71 & 0.32 & 0.44 & 0.60 \\
-\hline
-\end{tabular}\caption{Values of causal effects in data 3} 
-\end{table}
+
+
+```{r MED3}
+med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,
+                        treat="Treatment",treat.value=1,control.value=0,J=100,conf.level=0.95)
+
+summary(med.analysis,opt="avg")
+```
+
 
 <table>
 <thead>
@@ -353,13 +224,8 @@ $\tau$ & $\zeta$ & $\delta^Z$ & $\delta^1$ & $\delta^2$ & $\delta^3$  \\
   </tr>
 </table>
 
-```{r MED3}
-med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,treat="Treatment",treat.value=1,control.value=0,J=100,conf.level=0.95)
-
-summary(med.analysis,opt="avg")
-```
-
-# Data 4
+## Example 4
+<img src="data4.png">
 
 - Binary treatment $T$
 - Linear Outcome $Y$
@@ -368,47 +234,7 @@ summary(med.analysis,opt="avg")
 - Polytomic mediator $M_3$ 
 - Binary covariables $C_1,C_2,C_3$ 
 
-<img src="data4.png">
 
-\begin{figure}[htp]
-\centering
-\begin{tikzpicture}
-% nodes %
-\node (M1)	at (3.5,3) 	{$M_1$};
-\node (M2)	at (3.5,2) 	{$M_2$};
-\node (M3)	at (3.5,1) 	{$M_3$};
-\node (C1) 	at (6,3) 	{$C_1$};
-\node (C2) 	at (6,2) 	{$C_2$};
-\node (C3) 	at (0,2) 	{$C_3$};
-\node (T) 		at (0,0) 	{$T$};
-\node (Y) 		at (7,0) 	{$Y$};
-
-edges %
-\begin{scope}[every path/.style={->, line width= 1}, every node/.style={sloped, inner sep=1pt}]
-\draw (M1) --  (Y);
-\draw (M2) --  (Y);
-\draw (M3) --  (Y);
-\draw (T) --  (Y);
-\draw (T) --  (M1);
-\draw (T) --  (M2);
-\draw (T) --  (M3);
-\draw (C1) --  (Y)  ;
-\draw (C1) --  (M1);
-\draw (C1) --  (M2);
-\draw (C2) --  (Y);
-\draw (C2) --  (M1);
-\draw (C2) --  (M2);
-\draw (C2) --  (M3);
-\draw (C3) to [bend right=45]  (Y);
-\draw (C3) --  (M1);
-\draw (C3) --  (M2);
-\draw (C3) --  (M3);
-\draw [<->, dashed, line width =1] (M1) -- (M2);
-\draw [<->, dashed, line width =1] (M2) -- (M3);
-\end{scope}
-\end{tikzpicture} 
-\caption{DAG of data 4}\label{fig4}
-\end{figure}
 
 
 ```{r DATA4}
@@ -432,16 +258,15 @@ M3reg=polr(M3~Treatment + C2 + C3     , data = data4, method = "probit")
 Yreg=lm(Outcome~ Treatment + M1 + M2 + M3 + C1 + C2 + C3, data=data4)
 ```
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-$\tau$ &  $\zeta$ & $\delta^Z$ & $\delta^1$ & $\delta^2$ & $\delta^3$   \\
-\hline
-60.96 & 10 & 50.96 & 34.2 & 0 & 16.76   \\
-\hline
-\end{tabular}\caption{Values of causal effects in data 4} 
-\end{table}
+
+
+```{r MED4}
+med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,
+                        treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
+
+summary(med.analysis,opt="avg")
+```
+
 
 <table>
 <thead>
@@ -456,10 +281,3 @@ $\tau$ &  $\zeta$ & $\delta^Z$ & $\delta^1$ & $\delta^2$ & $\delta^3$   \\
     <td>60.96</td><td>10</td><td>50.96</td><td>34.2</td><td>0</td><td>16.76</td>
   </tr>
 </table>
-
-```{r MED4}
-med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model.y=Yreg,treat="Treatment",treat.value=1,control.value=0,J=1000,conf.level=0.95)
-
-summary(med.analysis,opt="avg")
-```
-
