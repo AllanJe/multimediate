@@ -6,3 +6,10 @@ If you have any questions or suggestions you can join me at allan.jerolon@parisd
 
 
 Mediation analysis for ordinal outcome with multiple Mediators is still in progress.
+
+
+Use the following lines codes to generate the vignettes. 
+
+library(devtools)
+install_github("AllanJe/multimediate",build_vignettes = TRUE)
+
