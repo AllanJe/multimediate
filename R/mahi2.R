@@ -83,12 +83,12 @@ mahi2=function(data,name.exposure,name.outcome,name.mediators,lambda,Nboot=100,L
 
   if(P>1){
     out=list(selectionbyt=selectionbyt,selection=selection,step1=step1,bootcount=bootstep$counts,
-             multimed=multimed,pvals=pvals,pvalscorr=pvalscorr,
+             multimed=multimed,pvals=pvalsbytreat,pvalscorr=pvalscorr,
              n=n,K=K,Kmax=Kmax,lambda=lambda)
   }
   else{
     out=list(selection=selection,step1=step1,bootcount=bootstep$counts,
-             multimed=multimed,pvals=pvals,pvalscorr=pvalscorr,
+             multimed=multimed,pvals=pvalsbytreat,pvalscorr=pvalscorr,
              n=n,K=K,Kmax=Kmax,lambda=lambda)
   }
 
