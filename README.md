@@ -15,7 +15,7 @@ Follow the following instructions to download the package and install / use the 
 
 #?multimediate
 
-##Click on "Index" on the enbd of the help page
+##Click on "Index" at the end of the help page
 
 ##Click on "User guides, package vignettes and other documentation"
 
