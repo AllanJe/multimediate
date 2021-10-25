@@ -7,13 +7,15 @@
 \method{plot}{bm}(
   x,
   treatment = NULL,
+  logit = "logOR",
   labels = NULL,
   effect.type = c("indirect", "direct", "total"),
   xlim = NULL,
   ylim = NULL,
   xlab = "",
   ylab = "",
-  main = NULL,
+  main = "Estimates and confidence intervals",
+  is.legend = TRUE,
   lwd = 1.5,
   cex = 0.85,
   col = "black",
@@ -24,6 +26,8 @@
 \item{x}{element of the class "bm".}
 
 \item{treatment}{a character string indicating the baseline treatment value of the estimated causal mediation effect and direct effect to plot. Can be either "control", "treated", "average" or "three". If "NULL"(default), three sets of estimates are plotted.}
+
+\item{logit}{a character string indicating, when the outcome is binary, the scale of the average causal effects. "effects" for average causal effects, " OR" average causal effects on OR scale, "logOR" average causal effects on logOR scale.}
 
 \item{labels}{a vector of character strings indicating the labels for estimated effects. The default labels wiil be used if NULL.}
 
@@ -38,6 +42,8 @@
 \item{ylab}{label of the vertical axis.}
 
 \item{main}{main title.}
+
+\item{is.legend}{a logical value indicating the presence of the legend on top right. If the legend obscures some results, is.legend can be switched to "FALSE" or the x-axis can be changed manually with the parameters xlim.}
 
 \item{lwd}{width of the horizontal bars for confidence intervals.}
 
