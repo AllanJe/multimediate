@@ -5,6 +5,7 @@
 #'
 #' @param x element of the class "bm".
 #' @param treatment a character string indicating the baseline treatment value of the estimated causal mediation effect and direct effect to plot. Can be either "control", "treated", "average" or "three". If "NULL"(default), three sets of estimates are plotted.
+#' @param logit a character string indicating, when the outcome is binary, the scale of the average causal effects. "effects" for average causal effects, " OR" average causal effects on OR scale, "logOR" average causal effects on logOR scale.
 #' @param labels a vector of character strings indicating the labels for estimated effects. The default labels wiil be used if NULL.
 #' @param effect.type a vector indicating which quantities of interest to plot. Default is to plot all three quantities (indirects, direct and total effects).
 #' @param xlim range of the horizontal axis.
@@ -12,6 +13,7 @@
 #' @param xlab label of the horizontal axis.
 #' @param ylab label of the vertical axis.
 #' @param main main title.
+#' @param is.legend a logical value indicating the presence of the legend on top right. If the legend obscures some results, is.legend can be switched to "FALSE" or the x-axis can be changed manually with the parameters xlim.
 #' @param lwd width of the horizontal bars for confidence intervals.
 #' @param cex size of the dots for point estimates.
 #' @param col color of the dots and horizontal bars for the estimates.
@@ -26,7 +28,7 @@
 #'
 #'
 
-plot.bm=function (x, treatment = NULL, labels = NULL, effect.type = c("indirect","direct", "total"), xlim = NULL, ylim = NULL, xlab = "", ylab = "", main = NULL, lwd = 1.5, cex = 0.85, col = "black",...){
+plot.bm=function (x, treatment = NULL,logit="logOR", labels = NULL, effect.type = c("indirect","direct", "total"), xlim = NULL, ylim = NULL, xlab = "", ylab = "", main = "Estimates and confidence intervals",is.legend=TRUE, lwd = 1.5, cex = 0.85, col = "black",...){
 
   effect.type <- match.arg(effect.type, several.ok = TRUE)
   IND <- "indirect" %in% effect.type
@@ -39,21 +41,37 @@ plot.bm=function (x, treatment = NULL, labels = NULL, effect.type = c("indirect"
     treatment <- switch(treatment, control = 0, treated = 1, average = 2,
                         three = c(0, 1, 2))
   }
-  param <- plot.process(x)
+
+  if (logit=="logOR"){
+    param <- plot.process(x,logit="logOR")
+    main=paste(main, "on log OR scale")
+    vline <- 0
+  }
+  else if (logit=="OR"){
+    param <- plot.process(x,logit="OR")
+    main=paste(main, "on OR scale")
+    vline <- 1
+  }
+  else{
+    param <- plot.process(x,logit="effects")
+    vline <- 0
+  }
+
   NM=max(x$clust)
   y.axis <- (IND*(NM+1) + DIR + TOT):1
   if (is.null(xlim)) {
+    plusx=c(-.05,0.05)
     if (length(treatment) > 1) {
-      xlim <- range(param$range.1, param$range.0) * 1.2
+      xlim <- range(param$range.1, param$range.0) + plusx
     }
     else if (treatment == 1) {
-      xlim <- param$range.1 * 1.2
+      xlim <- param$range.1 + plusx
     }
     else if (treatment == 0){
-      xlim <- param$range.0 * 1.2
+      xlim <- param$range.0 + plusx
     }
     else{
-      xlim <- param$range.avg * 1.2
+      xlim <- param$range.avg + plusx
     }
   }
   if (is.null(ylim)) {
@@ -179,5 +197,9 @@ plot.bm=function (x, treatment = NULL, labels = NULL, effect.type = c("indirect"
   }
   axis(2, at = y.axis, labels = labels, las = 1, tick = TRUE,
        ...)
-  abline(v = 0, lty = 2)
+  abline(v = vline, lty = 2)
+  if (is.legend){
+    legend("topright",legend=c("control value","average","treated value"),pch=c(1,10,19),lty=c(3,5,1),title="Effects calculated with")
+
+  }
 }
