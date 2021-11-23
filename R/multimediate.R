@@ -82,7 +82,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   PredictM1<-PredictM0<-PredictM1b<-PredictM0b<- array(0, dim=c(J,N,NM))
 
 
-
+  print("Simulation of counterfactuals mediators")
   pb <- txtProgressBar(min = 0, max = NM, style = 3,title ="Simulation of counterfactuals mediators")
   for (nm in 1:NM){
     pred.data.t <- pred.data.c <- model.frame(lmodel.m[[nm]])
@@ -146,7 +146,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       }
     }
 
-    setTxtProgressBar(pb, nm)
+    setTxtProgressBar(pb, nm,title)
   }
   close(pb)
 
@@ -168,7 +168,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
     if (NM!=1 & e<=2) {
       Pr0.NM<-Pr1.NM <-ORPr0.NM<-ORPr1.NM <- array(NA,dim=c(N,J,NM))
     }
-
+    print(title[e])
     pb <- txtProgressBar(min = 0, max = J, style = 3,title=title[e])
     for (j in 1:J) {
       pred.data.t <- pred.data.c <-model.frame(model.y)
@@ -349,7 +349,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
           }
         }
       }
-      setTxtProgressBar(pb, j)
+      setTxtProgressBar(pb, j,title=title[e])
     }
     close(pb)
 
