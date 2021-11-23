@@ -18,6 +18,8 @@
 #'
 #' @importFrom MASS mvrnorm
 #' @importFrom mvtnorm rmvnorm
+#' @importFrom utils txtProgressBar
+#' @importFrom utils setTxtProgressBar
 
 multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95){
 
