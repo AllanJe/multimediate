@@ -79,9 +79,10 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   }
   PredictM1<-PredictM0<-PredictM1b<-PredictM0b<- array(0, dim=c(J,N,NM))
 
-  print("Simulation of counterfactuals mediators")
-  for (nm in 1:NM){
 
+
+  pb <- txtProgressBar(min = 0, max = NM, style = 3,title ="Simulation of counterfactuals mediators")
+  for (nm in 1:NM){
     pred.data.t <- pred.data.c <- model.frame(lmodel.m[[nm]])
 
     if (is.factor(lmodel.m[[nm]]$model[,treat])) {
@@ -143,8 +144,10 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       }
     }
 
-
+    setTxtProgressBar(pb, nm)
   }
+  close(pb)
+
 
   effect.tmp.NM=array(NA, dim = c(N, J, 2, NM))
   effect.tmp=array(NA, dim = c(N, J, 4))
@@ -152,8 +155,11 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   OR=array(NA, dim = c(J, 4))
   #OR.NM.polr=array(NA, dim = c(J, 2, NM,(length(model.y$lev)-2)))
   #OR.polr=array(NA, dim = c(J, 4,(length(model.y$lev)-2)))
-  print("Simulation of counterfactuals outcomes")
+
+  title=paste("Simulation of counterfactuals outcomes ",1:4,"/4",sep="")
   for (e in 1:4) {
+
+
     tt <- switch(e, c(1, 1, 1, 0), c(0, 0, 1, 0),
                  c(1, 0, 1, 1), c(1, 0, 0, 0))
     Pr0<-Pr1<-ORPr0<-ORPr1<- matrix(NA, nrow = N, ncol = J)
@@ -161,6 +167,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       Pr0.NM<-Pr1.NM <-ORPr0.NM<-ORPr1.NM <- array(NA,dim=c(N,J,NM))
     }
 
+    pb <- txtProgressBar(min = 0, max = J, style = 3,title=title[e])
     for (j in 1:J) {
       pred.data.t <- pred.data.c <-model.frame(model.y)
 
@@ -340,7 +347,9 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
           }
         }
       }
+      setTxtProgressBar(pb, j)
     }
+    close(pb)
 
     if (!is.null(model.y$family)){
 
@@ -379,7 +388,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
         # }
       }
     }
-  }
+}
   print("Computing average point estimates together with p-values and confidence intervals")
   # Step 3.3 : Compute the effects.
   # Compute the average effects. That is, we simply take the difference accross
