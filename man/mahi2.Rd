@@ -17,7 +17,8 @@ mahi2(
   epsilon = 0.001,
   Kmax = NULL,
   p.adjust.method = "bonferroni",
-  pvalseuil = 0.05
+  pvalseuil = 0.05,
+  bin = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ mahi2(
 \item{p.adjust.method}{a character string indicating the name of the method for the correction for the multiple test. See help with p.adjust.methods.}
 
 \item{pvalseuil}{the p-value for the multiple test}
+
+\item{bin}{a logical value indicating if the outcome is binary. if 'TRUE' a probit regression will be use is the second step. Default is 'FALSE'.}
 }
 \value{
 mahi returns an object of class "mahi", a list that contains the components listed below.
