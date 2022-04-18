@@ -5,9 +5,10 @@
 \title{lambdaChoice}
 \usage{
 lambdaChoice(
-  treatment,
-  mediators,
-  outcome,
+  data,
+  name.exposure,
+  name.outcome,
+  name.mediators,
   lambdamax = 500,
   N1 = 10,
   selectedMin = 0.5 * length(outcome),
@@ -19,11 +20,13 @@ lambdaChoice(
 )
 }
 \arguments{
-\item{treatment}{qsdfgh}
+\item{data}{a data.frame with the exposure, the outcome and mediators.}
 
-\item{mediators}{ertyu}
+\item{name.exposure}{a character string indicating the name of the exposure in data.}
 
-\item{outcome}{poiu}
+\item{name.outcome}{a character string indicating the name of the outcome in data.}
+
+\item{name.mediators}{a character string indicating the name of mediators in data.}
 
 \item{lambdamax}{mlkjh}
 
