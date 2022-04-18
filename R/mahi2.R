@@ -16,7 +16,7 @@
 #'@param Kmax maximum of mediators keept after the ranking obtained with stability selection.
 #'@param p.adjust.method a character string indicating the name of the method for the correction for the multiple test. See help with p.adjust.methods.
 #'@param pvalseuil the p-value for the multiple test
-#@param bin a logical value indicating if the outcome is binary. if 'TRUE' a probit regression will be use is the second step. Default is 'FALSE'.
+#'@param bin a logical value indicating if the outcome is binary. if 'TRUE' a probit regression will be use is the second step. Default is 'FALSE'.
 #'@return mahi returns an object of class "mahi", a list that contains the components listed below.
 #'
 #' @export
@@ -24,7 +24,7 @@
 #' @importFrom tsutils lambdaseq
 #' @importFrom gglasso gglasso
 
-mahi2=function(data,name.exposure,name.outcome,name.mediators,lambda,Nboot=100,L0=.1,eta=2,tau=1/P,epsilon=.001,Kmax=NULL,p.adjust.method="bonferroni",pvalseuil=0.05){
+mahi2=function(data,name.exposure,name.outcome,name.mediators,lambda,Nboot=100,L0=.1,eta=2,tau=1/P,epsilon=.001,Kmax=NULL,p.adjust.method="bonferroni",pvalseuil=0.05,bin=FALSE){
   n=dim(data)[1]
   K=length(name.mediators)
   P=length(name.exposure)
@@ -57,7 +57,10 @@ mahi2=function(data,name.exposure,name.outcome,name.mediators,lambda,Nboot=100,L
         medforout=paste(medforout,medch,sep=" + ")
       }
       formout1 = paste(name.outcome,"~",name.exposure[p])
-      model.y = lm(formula( paste(formout1,medforout,sep=" ")), data = data)
+      if(bin){
+        model.y = glm(formula( paste(formout1,medforout,sep=" ")), data = data, family=binomial(link = "logit"))
+        }
+      else{model.y = lm(formula( paste(formout1,medforout,sep=" ")), data = data)}
 
 
       correlated=TRUE
@@ -88,7 +91,7 @@ mahi2=function(data,name.exposure,name.outcome,name.mediators,lambda,Nboot=100,L
   }
   else{
     out=list(selection=selection,step1=step1,bootcount=bootstep$counts,
-             multimed=multimed,pvals=pvalsbytreat,pvalscorr=pvalscorr,
+             multimed=multimed[[1]],pvals=pvalsbytreat,pvalscorr=pvalscorr,
              n=n,K=K,Kmax=Kmax,lambda=lambda)
   }
 
