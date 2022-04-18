@@ -3,9 +3,10 @@
 #' "lambdaChoice" is used to .
 #'
 #'
-#' @param treatment  qsdfgh
-#' @param mediators ertyu
-#' @param outcome  poiu
+#' @param data a data.frame with the exposure, the outcome and mediators.
+#' @param name.exposure a character string indicating the name of the exposure in data.
+#' @param name.outcome a character string indicating the name of the outcome in data.
+#' @param name.mediators a character string indicating the name of mediators in data.
 #' @param lambdamax mlkjh
 #' @param N1 kjhg
 #' @param selectedMin mlkjh
@@ -19,11 +20,14 @@
 #' @export
 #'
 
-lambdaChoice <- function(treatment,mediators,outcome,lambdamax=500,N1=10,selectedMin=.5*length(outcome),selectedMax=length(outcome),L0=1,eta=2,tau=1,epsilon=.001){
+lambdaChoice <- function(data,name.exposure,name.outcome,name.mediators,lambdamax=500,N1=10,selectedMin=.5*length(outcome),selectedMax=length(outcome),L0=1,eta=2,tau=1,epsilon=.001){
 
   lambdamin=0
   lambda=lambdamax
 
+  treatment=as.matrix(data[,name.exposure])
+  mediators=as.matrix(data[,name.mediators])
+  outcome=data[,name.outcome]
 
   selected <- c()
   for (i in 1:N1){
