@@ -98,20 +98,22 @@ mediators=as.matrix(datahigh[,paste0("M", 1:p)])
 outcome=datahigh$Y
 
 
-  lambda <- lambdaChoice(treatment,mediators,outcome,lambdamax=10,selectedMin=n/2,selectedMax=n,L0=.1,eta=2,tau=1/P,epsilon=.001)
+  lambda <- lambdaChoice(datahigh,name.exposure="X",name.outcome="Y",name.mediators=paste0("M", 1:p),lambdamax=10,selectedMin=n/2,selectedMax=n,L0=.1,eta=2,tau=1/P,epsilon=.001)
 
 ```
 
 You have to choose a greater value, for example here 300.
 ```{r}
-lambda <- lambdaChoice(treatment,mediators,outcome,lambdamax=300,selectedMin=n/2,selectedMax=n,L0=.1,eta=2,tau=1/P,epsilon=.001)
+lambda <- lambdaChoice(datahigh,name.exposure="X",name.outcome="Y",name.mediators=paste0("M", 1:p),lambdamax=500,selectedMin=n/2,selectedMax=n,L0=.1,eta=2,tau=1/P,epsilon=.001)
 lambda
 ```
 
 Now you can use the mahi2 function for the selection
 ```{r}
-  mahifit <- mahi2(datahigh,name.exposure="X",name.outcome="Y",name.mediators=paste0("M", 1:p),
-                   lambda=lambda,Nboot=30,L0=.1,eta=2,tau=1/P,epsilon=.001,Kmax=NULL,p.adjust.method="hochberg",pvalseuil=0.05)
+  mahifit <- mahi3(data=datahigh,name.exposure="X",name.outcome="Y",name.mediators=paste0("M", 1:p),
+                   lambda=lambda,Nboot=30,L0=.1,eta=2,tau=1/P,epsilon=.001,
+                   Kmax=NULL,bin=FALSE,
+                   step2=TRUE,p.adjust.method="hochberg",pvalseuil=0.05)
 ```
 
 The function mahi2 returns a list containing several results such as the mediators selected in the first step. 
@@ -119,7 +121,7 @@ The function mahi2 returns a list containing several results such as the mediato
 
 To see the mediators selected after the step 1, use :
 ```{r}
-  mahifit$step1
+  mahifit$Kmaxrank
 ```
 Remember that the first 30 candidates are the real mediators. The first 10 (1 to 10) have a strong mediated effect, the next 10 (11 to 20) have a medium mediated effect, and the other 10 (21 to 30) have a very weak effect.
 
@@ -128,16 +130,18 @@ To see the mediators count for each mediator after the stability selection (step
 ```{r}
   mahifit$bootcount
 ```
+
 To see the ranking after the stability selection (step 1), use :
 ```{r}
-paste0("M", 1:p)[order(mahifit$bootcount,decreasing = TRUE)]
+mahifit$ranking
 ```
 
 
 To see the results of the multiple analysis with mediators selected at the step 1, use :
 ```{r}
-  summary(mahifit$multimed[[1]])
+  summary(mahifit$multimed)
 ```
+
 You can see the p-value in the previous table or use :
 ```{r}
   mahifit$pvals
