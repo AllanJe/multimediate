@@ -9,10 +9,15 @@ mahi(
   name.exposure,
   name.outcome,
   name.mediators,
-  nboot = 100,
-  nlambda = 50,
-  lambda = NULL,
+  lambda,
+  Nboot = 100,
+  L0 = 0.1,
+  eta = 2,
+  tau = 1/P,
+  epsilon = 0.001,
   Kmax = NULL,
+  bin = FALSE,
+  step2 = FALSE,
   p.adjust.method = "bonferroni",
   pvalseuil = 0.05
 )
@@ -26,13 +31,23 @@ mahi(
 
 \item{name.mediators}{a character string indicating the name of mediators in data.}
 
-\item{nboot}{number of bootstrap for stability selection of mediators. Default is 100.}
-
-\item{nlambda}{number of lambda use when lambda is not specified.}
-
 \item{lambda}{vector or a single value of lambda use for group-lasso.}
 
+\item{Nboot}{number of bootstrap for stability selection of mediators. Default is 100.}
+
+\item{L0}{dfghj}
+
+\item{eta}{dfghj}
+
+\item{tau}{dfghj}
+
+\item{epsilon}{cvbn}
+
 \item{Kmax}{maximum of mediators keept after the ranking obtained with stability selection.}
+
+\item{bin}{a logical value indicating if the outcome is binary. if 'TRUE' a probit regression will be use is the second step. Default is 'FALSE'.}
+
+\item{step2}{a logical value indicating if the a multiple test using the p-value calculated with multimediate (a multiple mediation analysis) have to be made. Default is 'FALSE'.}
 
 \item{p.adjust.method}{a character string indicating the name of the method for the correction for the multiple test. See help with p.adjust.methods.}
 
