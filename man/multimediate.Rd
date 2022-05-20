@@ -12,7 +12,8 @@ multimediate(
   treat.value = 1,
   control.value = 0,
   J = 1000,
-  conf.level = 0.95
+  conf.level = 0.95,
+  fun = mean
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ multimediate(
 \item{J}{number of Monte Carlo draws for quasi-Bayesian approximation.}
 
 \item{conf.level}{level of the returned two-sided confidence intervals. Default is to return the 2.5 and 97.5 percentiles of the simulated quantities.}
+
+\item{fun}{the function used to compute the point estimate of the effects of interest from its empirical distribution. The function mean or median can be used. Default is the function mean.}
 }
 \value{
 multimediate returns an object of class "mm", a list that contains the components listed below.
