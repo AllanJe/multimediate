@@ -109,12 +109,22 @@ lambda
 ```
 
 Now you can use the mahi function for the selection
-```{r}
+```{r,include=FALSE}
   mahifit <- mahi(data=datahigh,name.exposure="X",name.outcome="Y",name.mediators=paste0("M", 1:p),
                    lambda=lambda,Nboot=30,L0=.1,eta=2,tau=1/P,epsilon=.001,
                    Kmax=NULL,bin=FALSE,
                    step2=TRUE,p.adjust.method="hochberg",pvalseuil=0.05)
+```
 
+```{r,eval=FALSE}
+  mahifit <- mahi(data=datahigh,name.exposure="X",name.outcome="Y",name.mediators=paste0("M", 1:p),
+                   lambda=lambda,Nboot=30,L0=.1,eta=2,tau=1/P,epsilon=.001,
+                   Kmax=NULL,bin=FALSE,
+                   step2=TRUE,p.adjust.method="hochberg",pvalseuil=0.05)
+```
+
+
+```{r}
 summary(mahifit)
 ```
 
