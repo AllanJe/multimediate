@@ -59,6 +59,10 @@ summary.mm = function(object,opt="navg",logit="all",...){
                             P.val     =round(c(object$logORd.avg.p,object$logORn.avg.p,triout.avg.NM(object$logORd.avg.p.NM,object$logORn.avg.p.NM),object$logORz.avg.p,object$logORtau.p),4)
         )
       }}
+    pmtest= c(object$d1,object$d0,object$d1.NM,object$d0.NM,object$z1,object$z0,object$tau.coef)
+    if(sum(pmtest>0)!=length(pmtest)){
+      warning("Proportion mediated warning : This quantity makes sense only when the sign the causal mediated effects (i.e., the numerator) are the same as the sign of the average total effect (i.e., the denominator) and when the total effect is bigger than the mediated effect. Confidence intervals may be meaningless when the mediated and/or direct effects have a different sign.")
+    }
   }
   else {
     navg=data.frame("."        =c("ACME.treat","PM(treat)","ACME.control","PM(control)","ADE.treat","ADE.control","Total Effect"),
@@ -103,6 +107,10 @@ summary.mm = function(object,opt="navg",logit="all",...){
                             P.val     =round(c(object$logORd.avg.p,object$logORn.avg.p,object$logORz.avg.p,object$logORtau.p),4)
         )
       }}
+    pmtest= c(object$d1,object$d0,object$z1,object$z0,object$tau.coef)
+    if(sum(pmtest>0)!=length(pmtest)){
+      warning("Proportion mediated warning : This quantity makes sense only when the sign the causal mediated effects (i.e., the numerator) are the same as the sign of the average total effect (i.e., the denominator) and when the total effect is bigger than the mediated effect. Confidence intervals may be meaningless when the mediated and/or direct effects have a different sign.")
+    }
   }
   if (opt=="avg"){
     if (is.null(object$model.y$family) || object$model.y$family$link=="probit")
