@@ -33,6 +33,8 @@ summary.mm = function(object,opt="navg",logit="all",...){
 
     if (!is.null(object$model.y$family)){
       if (object$model.y$family$link=="logit"){
+
+        warning("The proportions mediated on the OR scale can be considered if the outcome is rare, otherwise the proportions mediated on effects scale and/or logOR scale have to be considered.")
         ORnavg=data.frame("."        =paste("OR",nom.navg),
                           Estimation=round(c(object$ORd1,object$ORn1,object$ORd0,object$ORn0,triout.NM(object$ORd1.NM,object$ORn1.NM,object$ORd0.NM,object$ORn0.NM),object$ORz1,object$ORz0,object$ORtau.coef),4),
                           IC.inf    =round(c(object$ORd1.ci[1],object$ORn1.ci[1],object$ORd0.ci[1],object$ORn0.ci[1],triout.ci.NM(object$ORd1.ci.NM,object$ORn1.ci.NM,object$ORd0.ci.NM,object$ORn0.ci.NM)[,1],object$ORz1.ci[1],object$ORz0.ci[1],object$ORtau.ci[1]),4),
@@ -80,6 +82,8 @@ summary.mm = function(object,opt="navg",logit="all",...){
     )
     if (!is.null(object$model.y$family)){
       if (object$model.y$family$link=="logit"){
+        warning("The proportion mediated on the OR scale can be considered if the outcome is rare, otherwise the proportion mediated on effect scale and/or logOR scale have to be considered.")
+
         ORnavg=data.frame("."        =c("OR.ACME.treat","OR.PM(treat)","OR.ACME.control","OR.PM(control)","OR.ADE.treat","OR.ADE.control","OR.Total Effect"),
                           Estimation=round(c(object$ORd1,object$ORn1,object$ORd0,object$ORn0,object$ORz1,object$ORz0,object$ORtau.coef),4),
                           IC.inf    =round(c(object$ORd1.ci[1],object$ORn1.ci[1],object$ORd0.ci[1],object$ORn0.ci[1],object$ORz1.ci[1],object$ORz0.ci[1],object$ORtau.ci[1]),4),
