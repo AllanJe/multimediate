@@ -40,15 +40,17 @@ CorCond2=function(e,lmodel){
         }
       }
     }
+
     is.Polr.Mi=inherits(lmodel[[1]],"polr")
     is.Polr.Mj=inherits(lmodel[[2]],"polr")
     is.Glm.Mi=inherits(lmodel[[1]],"glm")
     is.Glm.Mj=inherits(lmodel[[2]],"glm")
+
     if(is.Polr.Mi & is.Polr.Mj){
-      p=sort(as.numeric(unique(data[,Mi])))
+      p=sort(as.numeric(as.character(unique(data[,Mi]))))
       interceptp=as.vector(c(-Inf,lmodel[[1]]$zeta,Inf))
       coefp=as.vector(lmodel[[1]]$coefficients)
-      q=sort(as.numeric(unique(data[,Mj])))
+      q=sort(as.numeric(as.character(unique(data[,Mj]))))
       interceptq=as.vector(c(-Inf,lmodel[[2]]$zeta,Inf))
       coefq=as.vector(lmodel[[2]]$coefficients)
     }
@@ -62,35 +64,35 @@ CorCond2=function(e,lmodel){
       coefq=as.vector(summary(lmodel[[2]])$coefficients[-1,1])
     }
 
-    else if(is.Polr.Mi & is.Glm.Mj){
-      p=sort(as.numeric(unique(data[,Mi])))
-      interceptp=as.vector(c(-Inf,lmodel[[1]]$zeta,Inf))
-      coefp=as.vector(lmodel[[1]]$coefficients)
-      q=c(0,1)
-      interceptq=c(-Inf,-summary(lmodel[[2]])$coefficients[1,1],Inf)
-      coefq=as.vector(summary(lmodel[[2]])$coefficients[-1,1])
-    }
+      else if(is.Polr.Mi & is.Glm.Mj){
+        p=sort(as.numeric(as.character(unique(data[,Mi]))))
+        interceptp=as.vector(c(-Inf,lmodel[[1]]$zeta,Inf))
+        coefp=as.vector(lmodel[[1]]$coefficients)
+        q=c(0,1)
+        interceptq=c(-Inf,-summary(lmodel[[2]])$coefficients[1,1],Inf)
+        coefq=as.vector(summary(lmodel[[2]])$coefficients[-1,1])
+      }
 
-    else if(is.Glm.Mi & is.Polr.Mj){
-      p=c(0,1)
-      interceptp=c(-Inf,-summary(lmodel[[1]])$coefficients[1,1],Inf)
-      coefp=as.vector(summary(lmodel[[1]])$coefficients[-1,1])
-      q=sort(as.numeric(unique(data[,Mj])))
-      interceptq=as.vector(c(-Inf,lmodel[[2]]$zeta,Inf))
-      coefq=as.vector(lmodel[[2]]$coefficients)
-    }
+      else if(is.Glm.Mi & is.Polr.Mj){
+        p=c(0,1)
+        interceptp=c(-Inf,-summary(lmodel[[1]])$coefficients[1,1],Inf)
+        coefp=as.vector(summary(lmodel[[1]])$coefficients[-1,1])
+        q=sort(as.numeric(as.character(unique(data[,Mj]))))
+        interceptq=as.vector(c(-Inf,lmodel[[2]]$zeta,Inf))
+        coefq=as.vector(lmodel[[2]]$coefficients)
+      }
 
-    else if(is.Polr.Mi & is.Lm.Mj){
-      p=sort(as.numeric(unique(data[,Mi])))
-      interceptp=as.vector(c(-Inf,lmodel[[1]]$zeta,Inf))
-      coefp=as.vector(lmodel[[1]]$coefficients)
-    }
+      else if(is.Polr.Mi & is.Lm.Mj){
+        p=sort(as.numeric(as.character(unique(data[,Mi]))))
+        interceptp=as.vector(c(-Inf,lmodel[[1]]$zeta,Inf))
+        coefp=as.vector(lmodel[[1]]$coefficients)
+      }
 
-    else if(is.Lm.Mi & is.Polr.Mj){
-      p=sort(as.numeric(unique(data[,Mj])))
-      interceptp=as.vector(c(-Inf,lmodel[[2]]$zeta,Inf))
-      coefp=as.vector(lmodel[[2]]$coefficients)
-    }
+      else if(is.Lm.Mi & is.Polr.Mj){
+        p=sort(as.numeric(as.character(unique(data[,Mj]))))
+        interceptp=as.vector(c(-Inf,lmodel[[2]]$zeta,Inf))
+        coefp=as.vector(lmodel[[2]]$coefficients)
+      }
 
     else if(is.Glm.Mi & is.Lm.Mj){
       p=c(0,1)
@@ -114,7 +116,7 @@ CorCond2=function(e,lmodel){
       valueMi=c(1,as.numeric(as.character(value[i,names(value) %in% names(lmodel[[1]]$model)])))
       valueMj=c(1,as.numeric(as.character(value[i,names(value) %in% names(lmodel[[2]]$model)])))
 
-      covMiMj=cov(as.numeric(datai[,Mi]),as.numeric(datai[,Mj]))
+      covMiMj=cov(as.numeric(as.character(datai[,Mi])),as.numeric(as.character(datai[,Mj])))
 
       if( (is.Polr.Mi & is.Polr.Mj) | (is.Glm.Mi & is.Polr.Mj) | (is.Polr.Mi & is.Glm.Mj) | (is.Glm.Mi & is.Glm.Mj) ){
         bornep=borneq=NULL
