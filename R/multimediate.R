@@ -53,6 +53,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   MModel = list()
   for (nm in 1:NM){
     MModel[[nm]]=rmvnorm(J, mean = c(coef(lmodel.m[[nm]]),lmodel.m[[nm]]$zeta), sigma = vcov(lmodel.m[[nm]]))
+    #MModel[[nm]]=rmvnorm(J, mean = c(coef(lmodel.m[[nm]])), sigma = vcov(lmodel.m[[nm]]))
     mediator=c(mediator,names(lmodel.m[[nm]]$model)[1])
   }
 
@@ -118,15 +119,18 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       PredictM0[,,nm] <- array(muM0,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
       PredictM1b[,,nm] = array(muM1,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
       PredictM0b[,,nm] = array(muM0,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
-      if (is.null(dim(mmat.t))){
-        seuil=cbind(-Inf,MModel[[nm]][,-1],Inf)}
-      else{
-        seuil=cbind(-Inf,MModel[[nm]][,-(1:dim(mmat.t)[2])],Inf)
-      }
+      seuil=c(-Inf,lmodel.m[[nm]]$zeta,Inf)
+      # if (is.null(dim(mmat.t))){
+      #   seuil=cbind(-Inf,MModel[[nm]][,-1],Inf)}
+      # else{
+      #   seuil=cbind(-Inf,MModel[[nm]][,-(1:dim(mmat.t)[2])],Inf)
+      # }
       for (k in 1:length(lmodel.m[[nm]]$lev)){
         for (n in 1:N){
-          a=which(PredictM1b[,n,nm]>seuil[,k] & PredictM1b[,n,nm]<=seuil[,k+1])
-          b=which(PredictM0b[,n,nm]>seuil[,k] & PredictM0b[,n,nm]<=seuil[,k+1])
+          # a=which(PredictM1b[,n,nm]>seuil[,k] & PredictM1b[,n,nm]<=seuil[,k+1])
+          # b=which(PredictM0b[,n,nm]>seuil[,k] & PredictM0b[,n,nm]<=seuil[,k+1])
+          a=which(PredictM1b[,n,nm]>seuil[k] & PredictM1b[,n,nm]<=seuil[k+1])
+          b=which(PredictM0b[,n,nm]>seuil[k] & PredictM0b[,n,nm]<=seuil[k+1])
           PredictM1[a,n,nm]=lmodel.m[[nm]]$lev[k]
           PredictM0[b,n,nm]=lmodel.m[[nm]]$lev[k]
         }
@@ -250,12 +254,15 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
         Pr1[,j] <- t(as.matrix(YModel[j,1:dim(ymat.t)[2]])) %*% t(ymat.t)+ Yerror
         Pr0[,j] <- t(as.matrix(YModel[j,1:dim(ymat.c)[2]])) %*% t(ymat.c)+ Yerror
 
-        seuilY=cbind(-Inf,YModel[,-(1:dim(ymat.t)[2]+1)],Inf)
+        #seuilY=cbind(-Inf,YModel[,-(1:dim(ymat.t)[2]+1)],Inf)
+        seuilY=c(-Inf,model.y$zeta,Inf)
         Pr1b=as.numeric(Pr1[,j])
         Pr0b=as.numeric(Pr0[,j])
         for (k in 1:length(model.y$lev)){
-          a=which(Pr1b>seuilY[j,k] & Pr1b<=seuilY[j,k+1])
-          b=which(Pr0b>seuilY[j,k] & Pr0b<=seuilY[j,k+1])
+          #a=which(Pr1b>seuilY[j,k] & Pr1b<=seuilY[j,k+1])
+          #b=which(Pr0b>seuilY[j,k] & Pr0b<=seuilY[j,k+1])
+          a=which(Pr1b>seuilY[k] & Pr1b<=seuilY[k+1])
+          b=which(Pr0b>seuilY[k] & Pr0b<=seuilY[k+1])
           Pr1[a,j]=model.y$lev[k]
           Pr0[b,j]=model.y$lev[k]
         }
@@ -344,8 +351,10 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
             Pr1b.NM=as.numeric(Pr1.NM[,j,nm])
             Pr0b.NM=as.numeric(Pr0.NM[,j,nm])
             for (k in 1:length(model.y$lev)){
-              a=which(Pr1b.NM>seuilY[j,k] & Pr1b.NM<=seuilY[j,k+1])
-              b=which(Pr0b.NM>seuilY[j,k] & Pr0b.NM<=seuilY[j,k+1])
+              # a=which(Pr1b.NM>seuilY[j,k] & Pr1b.NM<=seuilY[j,k+1])
+              # b=which(Pr0b.NM>seuilY[j,k] & Pr0b.NM<=seuilY[j,k+1])
+              a=which(Pr1b.NM>seuilY[k] & Pr1b.NM<=seuilY[k+1])
+              b=which(Pr0b.NM>seuilY[k] & Pr0b.NM<=seuilY[k+1])
               Pr1.NM[a,j,nm]=model.y$lev[k]
               Pr0.NM[b,j,nm]=model.y$lev[k]
             }
