@@ -115,10 +115,9 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       }
 
 
-      PredictM1[,,nm] <- array(muM1,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
-      PredictM0[,,nm] <- array(muM0,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
-      PredictM1b[,,nm] = array(muM1,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
-      PredictM0b[,,nm] = array(muM0,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
+      PredictM1[,,nm] <- PredictM1b[,,nm] <- array(muM1,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
+      PredictM0[,,nm] <- PredictM0b[,,nm] <- array(muM0,dim=c(J,N)) + array(error[,nm], dim=c(J,N))
+
       seuil=c(-Inf,lmodel.m[[nm]]$zeta,Inf)
       # if (is.null(dim(mmat.t))){
       #   seuil=cbind(-Inf,MModel[[nm]][,-1],Inf)}
@@ -126,13 +125,18 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
       #   seuil=cbind(-Inf,MModel[[nm]][,-(1:dim(mmat.t)[2])],Inf)
       # }
       for (k in 1:length(lmodel.m[[nm]]$lev)){
-        for (n in 1:N){
+        for (j in 1:J){
+          #for (n in 1:N){
           # a=which(PredictM1b[,n,nm]>seuil[,k] & PredictM1b[,n,nm]<=seuil[,k+1])
           # b=which(PredictM0b[,n,nm]>seuil[,k] & PredictM0b[,n,nm]<=seuil[,k+1])
-          a=which(PredictM1b[,n,nm]>seuil[k] & PredictM1b[,n,nm]<=seuil[k+1])
-          b=which(PredictM0b[,n,nm]>seuil[k] & PredictM0b[,n,nm]<=seuil[k+1])
-          PredictM1[a,n,nm]=lmodel.m[[nm]]$lev[k]
-          PredictM0[b,n,nm]=lmodel.m[[nm]]$lev[k]
+            # a=which(PredictM1b[,n,nm]>seuil[k] & PredictM1b[,n,nm]<=seuil[k+1])
+            # b=which(PredictM0b[,n,nm]>seuil[k] & PredictM0b[,n,nm]<=seuil[k+1])
+          a=which(PredictM1b[j,,nm]>seuil[k] & PredictM1b[j,,nm]<=seuil[k+1])
+          b=which(PredictM0b[j,,nm]>seuil[k] & PredictM0b[j,,nm]<=seuil[k+1])
+          # PredictM1[a,n,nm]=lmodel.m[[nm]]$lev[k]
+          # PredictM0[b,n,nm]=lmodel.m[[nm]]$lev[k]
+          PredictM1[j,a,nm]=lmodel.m[[nm]]$lev[k]
+          PredictM0[j,b,nm]=lmodel.m[[nm]]$lev[k]
         }
       }
     }
