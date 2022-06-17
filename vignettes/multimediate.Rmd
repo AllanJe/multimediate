@@ -319,7 +319,7 @@ med.analysis=multimediate(lmodel.m=list(M1reg,M2reg,M3reg),correlated=TRUE,model
       <td>Total Effect</td><td>Direct Effect</td><td>Joint Indirect Effect</td><td>Indirect Effect by M1</td><td>Indirect Effect by M2</td><td>Indirect Effect by M3</td>
     </tr>
     <tr>
-      <td>60.96</td><td>10</td><td>50.96</td><td>34.2</td><td>0</td><td>16.76</td>
+      <td>57.68</td><td>10</td><td>47.48</td><td>34.2</td><td>0</td><td>13.48</td>
     </tr>
 </table>
 
