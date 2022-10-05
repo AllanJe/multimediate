@@ -29,22 +29,22 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -62,55 +62,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -540,16 +539,16 @@ Indirect Effect by M3
 </table>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(med.analysis,<span class="at">opt=</span><span class="st">&quot;avg&quot;</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               . Estimation  IC.inf  IC.sup P.val</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint    81.5521 79.8839 83.1217     0</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.8859  0.8781  0.8935     0</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1    10.3814  9.5696 11.1916     0</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.1128  0.1035  0.1221     0</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2    17.5281 16.6205 18.4397     0</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.1904  0.1802  0.2012     0</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3    53.6427 52.3473 54.8573     0</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.5828  0.5667  0.5990     0</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE    10.5001  9.7850 11.2085     0</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect    92.0523 90.5791 93.5384     0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint    81.5806 79.9882 83.2294     0</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.8861  0.8785  0.8941     0</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1    10.3973  9.6342 11.1536     0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.1129  0.1045  0.1213     0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2    17.5172 16.6159 18.5198     0</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.1903  0.1797  0.2014     0</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3    53.6661 52.5103 54.9319     0</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.5830  0.5676  0.5986     0</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE    10.4815  9.7786 11.1545     0</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect    92.0621 90.6320 93.5132     0</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(med.analysis)</span></span></code></pre></div>
 </div>
@@ -647,27 +646,27 @@ Indirect Effect by M3
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mediated on the OR scale can be considered if the outcome is rare, otherwise the</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; proportions mediated on effects scale and/or logOR scale have to be considered.</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               . Estimation IC.inf IC.sup P.val               . Estimation</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint     0.0775 0.0580 0.1010 0.000   OR ACME.joint     1.9442</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.4436 0.3290 0.6049 0.000     OR PM.joint     0.6264</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1     0.0255 0.0000 0.0595 0.046      OR ACME.M1     1.2466</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.1426 0.0000 0.3667 0.046        OR PM.M1     0.2561</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2     0.0215 0.0035 0.0470 0.016      OR ACME.M2     1.2015</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.1225 0.0211 0.2931 0.016        OR PM.M2     0.2173</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3     0.0280 0.0135 0.0475 0.000      OR ACME.M3     1.2750</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.1620 0.0734 0.3045 0.000        OR PM.M3     0.2790</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE     0.0970 0.0530 0.1425 0.000          OR ADE     2.2814</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect     0.1755 0.1280 0.2330 0.000 OR Total Effect     4.4463</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint     0.0810 0.0595 0.1060 0.000   OR ACME.joint     1.9411</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.4465 0.3253 0.6031 0.000     OR PM.joint     0.6314</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1     0.0260 0.0010 0.0625 0.034      OR ACME.M1     1.2474</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.1426 0.0041 0.3734 0.034        OR PM.M1     0.2551</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2     0.0220 0.0030 0.0475 0.006      OR ACME.M2     1.2062</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.1195 0.0196 0.2879 0.006        OR PM.M2     0.2200</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3     0.0290 0.0140 0.0505 0.000      OR ACME.M3     1.2755</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.1592 0.0752 0.3096 0.000        OR PM.M3     0.2783</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE     0.1010 0.0540 0.1490 0.000          OR ADE     2.2944</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect     0.1820 0.1310 0.2360 0.000 OR Total Effect     4.4811</span></span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    IC.inf IC.sup P.val                  . Estimation IC.inf IC.sup P.val</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  1.6382 2.3846 0.000   logOR ACME.joint     0.6648 0.4936 0.8690 0.000</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.5224 0.7545 0.000     logOR PM.joint     0.4441 0.3398 0.6048 0.000</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  1.0003 1.6597 0.050      logOR ACME.M1     0.2204 0.0003 0.5066 0.050</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0.0004 0.5183 0.050        logOR PM.M1     0.1477 0.0002 0.3581 0.050</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  1.0333 1.4787 0.022      logOR ACME.M2     0.1836 0.0328 0.3912 0.022</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  0.0444 0.4298 0.022        logOR PM.M2     0.1230 0.0214 0.2855 0.022</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  1.1330 1.5011 0.000      logOR ACME.M3     0.2429 0.1248 0.4062 0.000</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8  0.1528 0.4410 0.000        logOR PM.M3     0.1628 0.0815 0.2988 0.000</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  1.5785 3.3608 0.000          logOR ADE     0.8248 0.4565 1.2122 0.000</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2.9503 6.7967 0.000 logOR Total Effect     1.4921 1.0819 1.9164 0.000</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  1.6449 2.3545 0.000   logOR ACME.joint     0.6633 0.4977 0.8563 0.000</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.5175 0.7430 0.000     logOR PM.joint     0.4461 0.3298 0.6026 0.000</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  1.0121 1.6826 0.044      logOR ACME.M1     0.2210 0.0121 0.5203 0.044</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0.0142 0.5343 0.044        logOR PM.M1     0.1474 0.0065 0.3626 0.044</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  1.0359 1.4720 0.006      logOR ACME.M2     0.1875 0.0352 0.3866 0.006</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  0.0448 0.4196 0.006        logOR PM.M2     0.1250 0.0222 0.2737 0.006</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  1.1253 1.5046 0.000      logOR ACME.M3     0.2433 0.1180 0.4085 0.000</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8  0.1433 0.4514 0.000        logOR PM.M3     0.1622 0.0762 0.3073 0.000</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  1.5901 3.3924 0.000          logOR ADE     0.8305 0.4638 1.2215 0.000</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 3.0039 6.8438 0.000 logOR Total Effect     1.4999 1.0999 1.9233 0.000</span></span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(med.analysis,opt=&quot;avg&quot;,logit=&quot;effects&quot;)</span></span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(med.analysis)</span></span>
@@ -775,16 +774,16 @@ Indirect Effect by M3
 </table>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(med.analysis,<span class="at">opt=</span><span class="st">&quot;avg&quot;</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               . Estimation IC.inf IC.sup P.val</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint     1.6030 1.0357 2.0630  0.00</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.7166 0.5772 0.8584  0.00</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1     0.3445 0.0437 0.6574  0.02</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.1577 0.0175 0.3008  0.02</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2     0.4305 0.1614 0.8272  0.00</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.1955 0.0733 0.3853  0.00</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3     0.4943 0.2381 0.8460  0.00</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.2254 0.1065 0.3784  0.00</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE     0.6315 0.3278 0.9796  0.00</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect     2.2345 1.5055 2.5320  0.00</span></span></code></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint     1.5875 1.0282 2.0601  0.00</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.7097 0.5574 0.8560  0.00</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1     0.3751 0.0666 0.7794  0.02</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.1714 0.0295 0.3587  0.02</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2     0.4057 0.1357 0.8272  0.02</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.1886 0.0602 0.3913  0.02</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3     0.4709 0.2289 0.8002  0.00</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.2155 0.1042 0.3904  0.00</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE     0.6465 0.2620 0.9863  0.00</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect     2.2340 1.6338 2.5080  0.00</span></span></code></pre></div>
 </div>
 <div id="example-4" class="section level2">
 <h2>Example 4</h2>
@@ -881,16 +880,68 @@ Indirect Effect by M3
 </table>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(med.analysis,<span class="at">opt=</span><span class="st">&quot;avg&quot;</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               . Estimation  IC.inf  IC.sup P.val</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint    47.9529 46.3113 49.5168 0.000</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.8269  0.8054  0.8481 0.000</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1    33.8296 33.0866 34.6022 0.000</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.5835  0.5673  0.5999 0.000</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2     0.0008 -0.0026  0.0060 0.608</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.0000  0.0000  0.0001 0.608</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3    14.1224 12.6161 15.6299 0.000</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.2436  0.2178  0.2701 0.000</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE    10.0351  8.8019 11.2128 0.000</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect    57.9880 56.9442 58.9410 0.000</span></span></code></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint    47.9457 46.3439 49.4256   0.0</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint     0.8267  0.8060  0.8472   0.0</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1    33.8210 33.0531 34.6029   0.0</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1     0.5832  0.5677  0.5994   0.0</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2     0.0009 -0.0028  0.0062   0.6</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2     0.0000  0.0000  0.0001   0.6</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3    14.1239 12.7587 15.5018   0.0</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3     0.2436  0.2192  0.2683   0.0</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE    10.0496  8.8428 11.2213   0.0</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect    57.9952 56.9755 58.9563   0.0</span></span></code></pre></div>
+</div>
+<div id="example-5" class="section level2">
+<h2>Example 5</h2>
+<ul>
+<li>Binary treatment <span class="math inline">\(T\)</span></li>
+<li>Survival Outcome <span class="math inline">\(Y\)</span></li>
+<li>Linear mediators <span class="math inline">\(M_1,M_2,M_3\)</span></li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(data5)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data5$Exposure=as.factor(data5$Exposure)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># data5$M1=as.numeric(data5$M1)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data5$M3=as.numeric(data5$M3)</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># data5$M2=as.numeric(data5$M2)</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># data5$Outcome=as.numeric(data5$Outcome)</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data5)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Exposure            M1               M2               M3        </span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :0.0000   Min.   : 4.395   Min.   : 3.663   Min.   : 6.050  </span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:0.0000   1st Qu.: 7.332   1st Qu.: 6.623   1st Qu.: 9.563  </span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :1.0000   Median : 8.006   Median : 7.301   Median :10.269  </span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :0.5097   Mean   : 8.004   Mean   : 7.324   Mean   :10.292  </span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:1.0000   3rd Qu.: 8.668   3rd Qu.: 8.031   3rd Qu.:11.011  </span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :1.0000   Max.   :11.361   Max.   :11.176   Max.   :13.883  </span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      event     surv_time      </span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :1   Min.   :0.00000  </span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:1   1st Qu.:0.02000  </span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :1   Median :0.04000  </span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :1   Mean   :0.05808  </span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:1   3rd Qu.:0.08000  </span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :1   Max.   :0.57000</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>modM1<span class="ot">=</span><span class="fu">lm</span>(M1 <span class="sc">~</span> Exposure, <span class="at">data =</span> data5)    </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>modM2<span class="ot">=</span><span class="fu">lm</span>(M2 <span class="sc">~</span> Exposure, <span class="at">data =</span> data5)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>modM3<span class="ot">=</span><span class="fu">lm</span>(M3 <span class="sc">~</span> Exposure, <span class="at">data =</span> data5)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>lmodel.m<span class="ot">=</span><span class="fu">list</span>(modM1,modM2, modM3)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timereg)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: le package &#39;timereg&#39; a été compilé avec la version R 4.1.2</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Le chargement a nécessité le package : survival</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: le package &#39;survival&#39; a été compilé avec la version R 4.1.2</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>model.y<span class="ot">=</span><span class="fu">aalen</span>(<span class="fu">Surv</span>(surv_time, event) <span class="sc">~</span> <span class="fu">const</span>(Exposure) <span class="sc">+</span> <span class="fu">const</span>(M1) <span class="sc">+</span> <span class="fu">const</span>(M2) <span class="sc">+</span> <span class="fu">const</span>(M3), <span class="at">data =</span> data5, <span class="at">robust=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>multi.media<span class="ot">=</span><span class="fu">multimediate</span>(lmodel.m,<span class="at">correlated=</span><span class="cn">TRUE</span>,model.y,<span class="at">treat=</span><span class="st">&#39;Exposure&#39;</span>,<span class="at">treat.value=</span><span class="dv">1</span>,<span class="at">control.value=</span><span class="dv">0</span>,<span class="at">J=</span><span class="dv">1000</span>,<span class="at">conf.level=</span><span class="fl">0.95</span>,<span class="at">data=</span>data5)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(multi.media, <span class="at">opt=</span><span class="st">&#39;avg&#39;</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               .  Estimation      IC.inf      IC.sup P.val</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    ACME.joint 113032.3615  65765.8269 162973.9159 0.000</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      PM.joint      0.5396      0.2388      1.0404 0.000</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       ACME.M1   2410.8660  -4550.6050  10343.2473 0.466</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         PM.M1      0.0112     -0.0218      0.0527 0.466</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       ACME.M2  49329.4705   2938.8074  97861.0502 0.034</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         PM.M2      0.2360      0.0178      0.5690 0.034</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       ACME.M3  61292.0250  20430.0356  98261.3886 0.002</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8         PM.M3      0.2929      0.0888      0.6166 0.002</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9           ADE 115345.9450  -4060.0914 238125.8455 0.058</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Total Effect 228378.3066 121750.6224 337168.7779 0.000</span></span></code></pre></div>
 </div>
 
 
