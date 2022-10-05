@@ -18,7 +18,8 @@ Imports:
     tsutils, 
     gglasso, 
     graphics,
-    car
+    car,
+    timereg
 Suggests: 
     knitr,
     rmarkdown
