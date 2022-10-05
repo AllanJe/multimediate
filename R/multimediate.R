@@ -1,17 +1,20 @@
 #' multimediate
 #'
 #'
-#' 'multimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimate average causal mediation effects on OR scale and logOR scale.
+#' 'multimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimates average causal mediation effects on OR scale and logOR scale.
+#' with a survival outcome, 'multimediate' also estimates average causal mediation effects on cases per person-year scale.
 #'
 #'@param lmodel.m list of fitted models object for mediators. Can be of class 'lm', 'polr','glm'.
 #'@param correlated a logical value. if 'FALSE' a identity matrix is used for the matrix of correlation of mediators; if 'TRUE' matrix of correlation is estimated. Default is 'FALSE'.
-#'@param model.y a fitted model object for the outcome. Can be of class 'lm', 'polr','glm'.
+#'@param model.y a fitted model object for the outcome. Can be of class 'lm', 'polr','glm' or 'aalen'.
 #'@param treat a character string indicating the name of the treatment variable used in the models. The treatment can be either binary (integer or a two-valued factor) or continuous (numeric).
 #'@param treat.value value of the treatment variable used as the treatment condition. Default is 1.
 #'@param control.value value of the treatment variable used as the control condition. Default is 0.
 #'@param J number of Monte Carlo draws for quasi-Bayesian approximation.
 #'@param conf.level level of the returned two-sided confidence intervals. Default is to return the 2.5 and 97.5 percentiles of the simulated quantities.
 #'@param fun the function used to compute the point estimate of the effects of interest from its empirical distribution. The function mean or median can be used. Default is the function mean.
+#'@param data dataset with all variables used in the mediator and outcome models
+#'@param peryr the number of person-years to multiply the additive estimator to obtain results in scale of cases per person-years (only applicable to the survival outcome)
 #'
 #'@return multimediate returns an object of class "mm", a list that contains the components listed below.
 #' The function summary (i.e., summary.mm) can be used to obtain a table of the results.
@@ -21,9 +24,15 @@
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom utils txtProgressBar
 #' @importFrom utils setTxtProgressBar
+#' @importFrom timereg aalen
 
-multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95,fun=mean){
 
+multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95, fun=mean, data=NULL, peryr=100000){
+
+  if(inherits(model.y, "aalen")){
+    return(multimediate_survival(lmodel.m,correlated,model.y,treat,treat.value,control.value,J,conf.level, fun, data, peryr))
+  }
+  else{
   N=dim(lmodel.m[[1]]$model)[1]
   NM=length(lmodel.m)
 
@@ -44,7 +53,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
     }
   }
 
-  testy=inherits(model.y, c("lm","glm","polr"))
+  testy=inherits(model.y, c("lm","glm","polr","aalen"))
   if(testy==FALSE){
     stop("Outcome's model not implemented yet.")
   }
@@ -129,8 +138,8 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
           #for (n in 1:N){
           # a=which(PredictM1b[,n,nm]>seuil[,k] & PredictM1b[,n,nm]<=seuil[,k+1])
           # b=which(PredictM0b[,n,nm]>seuil[,k] & PredictM0b[,n,nm]<=seuil[,k+1])
-            # a=which(PredictM1b[,n,nm]>seuil[k] & PredictM1b[,n,nm]<=seuil[k+1])
-            # b=which(PredictM0b[,n,nm]>seuil[k] & PredictM0b[,n,nm]<=seuil[k+1])
+          # a=which(PredictM1b[,n,nm]>seuil[k] & PredictM1b[,n,nm]<=seuil[k+1])
+          # b=which(PredictM0b[,n,nm]>seuil[k] & PredictM0b[,n,nm]<=seuil[k+1])
           a=which(PredictM1b[j,,nm]>seuil[k] & PredictM1b[j,,nm]<=seuil[k+1])
           b=which(PredictM0b[j,,nm]>seuil[k] & PredictM0b[j,,nm]<=seuil[k+1])
           # PredictM1[a,n,nm]=lmodel.m[[nm]]$lev[k]
@@ -416,7 +425,7 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
         # }
       }
     }
-}
+  }
   print("Computing average point estimates together with p-values and confidence intervals")
   # Step 3.3 : Compute the effects.
   # Compute the average effects. That is, we simply take the difference accross
@@ -834,4 +843,5 @@ multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,cont
   }
   class(out) <- "mm"
   return(out)
+  }
 }
