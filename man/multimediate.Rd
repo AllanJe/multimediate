@@ -13,7 +13,9 @@ multimediate(
   control.value = 0,
   J = 1000,
   conf.level = 0.95,
-  fun = mean
+  fun = mean,
+  data = NULL,
+  peryr = 1e+05
 )
 }
 \arguments{
@@ -21,7 +23,7 @@ multimediate(
 
 \item{correlated}{a logical value. if 'FALSE' a identity matrix is used for the matrix of correlation of mediators; if 'TRUE' matrix of correlation is estimated. Default is 'FALSE'.}
 
-\item{model.y}{a fitted model object for the outcome. Can be of class 'lm', 'polr','glm'.}
+\item{model.y}{a fitted model object for the outcome. Can be of class 'lm', 'polr','glm' or 'aalen'.}
 
 \item{treat}{a character string indicating the name of the treatment variable used in the models. The treatment can be either binary (integer or a two-valued factor) or continuous (numeric).}
 
@@ -34,11 +36,16 @@ multimediate(
 \item{conf.level}{level of the returned two-sided confidence intervals. Default is to return the 2.5 and 97.5 percentiles of the simulated quantities.}
 
 \item{fun}{the function used to compute the point estimate of the effects of interest from its empirical distribution. The function mean or median can be used. Default is the function mean.}
+
+\item{data}{dataset with all variables used in the mediator and outcome models}
+
+\item{peryr}{the number of person-years to multiply the additive estimator to obtain results in scale of cases per person-years (only applicable to the survival outcome)}
 }
 \value{
 multimediate returns an object of class "mm", a list that contains the components listed below.
 The function summary (i.e., summary.mm) can be used to obtain a table of the results.
 }
 \description{
-'multimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimate average causal mediation effects on OR scale and logOR scale.
+'multimediate' is used to estimate various quantities for causal mediation analysis, including average causal mediation effects (indirect effect), average direct effects, proportions mediated, and total effect, in presence of multiple mediators uncausally related. With a binary outcome, 'multimediate' also estimates average causal mediation effects on OR scale and logOR scale.
+with a survival outcome, 'multimediate' also estimates average causal mediation effects on cases per person-year scale.
 }
