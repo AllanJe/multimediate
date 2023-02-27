@@ -12,7 +12,7 @@
 #' @export
 #'
 
-summary.bm=function(object,opt="navg",logit="all",...){
+summary.bm = function(object,opt="navg",logit="all",...){
 
 
     nom.navg=c("ACME.joint.treat","PM(treat)","ACME.joint.control","PM(control)",paste(c("ACME.treat.","PM(treat).","ACME.control.","PM(control)."),"Block.",rep(1:max(object$clust),each=4),sep=""),"ADE.treat","ADE.control","Total Effect")
