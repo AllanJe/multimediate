@@ -1,4 +1,4 @@
-triout.ci.NM <- function(d1.ci,p1.ci,d0.ci,p0.ci){
+triout.ci.NM = function(d1.ci,p1.ci,d0.ci,p0.ci){
   NM=length(d1.ci[,1])
   res=array(NA,dim=c(4*NM,2))
   u=seq(1,4*NM,4)
