@@ -1,7 +1,8 @@
 #'@import stats
 #'@importFrom graphics par
 #'@importFrom graphics barplot
-SpecClust <-function(medata,seuil=0){
+#'
+SpecClust = function(medata,seuil=0){
   S <- make.similarity(medata, similarity)
   W <- make.affinity(S, seuil)
   D <- diag(apply(W, 1, sum))
@@ -12,5 +13,5 @@ SpecClust <-function(medata,seuil=0){
   barplot(evL$values)
   k=as.numeric(readline(prompt="Nombre de cluster? "))
   Z   <- evL$vectors[,(ncol(evL$vectors)-k+1):ncol(evL$vectors)]
-  kmeans(Z,k,nstart=3)$cluster
+  return(kmeans(Z,k,nstart=3)$cluster)
 }
