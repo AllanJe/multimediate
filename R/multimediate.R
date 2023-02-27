@@ -27,7 +27,7 @@
 #' @importFrom timereg aalen
 
 
-multimediate=function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95, fun=mean, data=NULL, peryr=100000){
+multimediate = function(lmodel.m,correlated=FALSE,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95, fun=mean, data=NULL, peryr=100000){
 
   if(inherits(model.y, "aalen")){
     return(multimediate_survival(lmodel.m,correlated,model.y,treat,treat.value,control.value,J,conf.level, fun, data, peryr))
