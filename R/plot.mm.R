@@ -28,7 +28,7 @@
 #'
 #'
 
-plot.mm=function (x, treatment = NULL,logit="logOR", labels = NULL, effect.type = c("indirect","direct", "total"), xlim = NULL, ylim = NULL, xlab = "", ylab = "", main = "Estimates and confidence intervals",is.legend=TRUE, lwd = 1.5, cex = 0.85, col = "black",...){
+plot.mm = function(x, treatment = NULL,logit="logOR", labels = NULL, effect.type = c("indirect","direct", "total"), xlim = NULL, ylim = NULL, xlab = "", ylab = "", main = "Estimates and confidence intervals",is.legend=TRUE, lwd = 1.5, cex = 0.85, col = "black",...){
 
   effect.type <- match.arg(effect.type, several.ok = TRUE)
   IND <- "indirect" %in% effect.type
