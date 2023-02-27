@@ -5,7 +5,7 @@
 #'
 #'
 
-CorCond=function(e,lmodel.m){
+CorCond = function(e,lmodel.m){
   NM=length(lmodel.m)
   k=1
 
