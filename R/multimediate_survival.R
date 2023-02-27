@@ -225,6 +225,29 @@ multimediate_survival=function(lmodel.m,correlated=FALSE,model.y,treat,treat.val
         trans.c <- model.matrix(~ ., data=data[,getvarnames(model.y$call)$xvar])[,-1]
         trans.c[, grep(treat,colnames(trans.c))] <- as.numeric(as.character(pred.data.c[, treat]))
         trans.c[, mediator] <- as.matrix(pred.data.c[, mediator])
+
+        ymat.t = trans.t
+        ymat.c = trans.c
+
+
+        # Check if exposure-mediator interactions
+        if(length(grep(' * ', row.names(coef(model.y))))>0){
+          ymat.t = as.data.frame(trans.t)
+          ymat.c = as.data.frame(trans.c)
+          position <- grep(' * ', row.names(coef(model.y)))
+          for(i in mediator){
+            if (grepl(i, row.names(coef(model.y))[position])){
+              med_int <- i
+            }
+          }
+
+          order <- unlist(strsplit(substr(row.names(coef(model.y)), 7, nchar(row.names(coef(model.y)))),')'))
+          order[position] <- 'interaction'
+          ymat.t$interaction <- ymat.t$Exposant*ymat.t[,med_int]
+          ymat.t <- as.matrix(ymat.t[,order])
+          ymat.c$interaction <- ymat.c$Exposant*ymat.c[,med_int]
+          ymat.c <- as.matrix(ymat.c[,order])
+        }
       } else{
         ymat.t=ymat.c=model.matrix(model.y)
         trans.t <- model.matrix(terms(model.y), data = pred.data.t)
@@ -329,6 +352,28 @@ multimediate_survival=function(lmodel.m,correlated=FALSE,model.y,treat,treat.val
             trans.c <- model.matrix(~ ., data=data[,getvarnames(model.y$call)$xvar])[,-1]
             trans.c[, grep(treat,colnames(trans.c))] <- as.numeric(as.character(pred.data.c[, treat]))
             trans.c[, mediator] <- as.matrix(pred.data.c[, mediator])
+
+            ymat.t = trans.t
+            ymat.c = trans.c
+
+
+            # Check if exposure-mediator interactions
+            if(length(grep(' * ', row.names(coef(model.y))))>0){
+              ymat.t = as.data.frame(trans.t)
+              ymat.c = as.data.frame(trans.c)
+              position <- grep(' * ', row.names(coef(model.y)))
+              for(i in mediator){
+                if (grepl(i, row.names(coef(model.y))[position])){
+                  med_int <- i
+                }
+              }
+              order <- unlist(strsplit(substr(row.names(coef(model.y)), 7, nchar(row.names(coef(model.y)))),')'))
+              order[position] <- 'interaction'
+              ymat.t$interaction <- ymat.t$Exposant*ymat.t[,med_int]
+              ymat.t <- as.matrix(ymat.t[,order])
+              ymat.c$interaction <- ymat.c$Exposant*ymat.c[,med_int]
+              ymat.c <- as.matrix(ymat.c[,order])
+            }
           } else{
             ymat.t=ymat.c=model.matrix(model.y)
             trans.t <- model.matrix(terms(model.y), data = pred.data.t)
