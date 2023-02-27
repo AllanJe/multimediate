@@ -7,7 +7,7 @@
 #'@param data data frame with variables from the formula
 #'@return 'getvarnames' returns a list with 'varnames' (referring to all variable names), 'xvar' (referring to the predictors), and 'yvar' (referring to the outcome)
 
-getvarnames <- function(formula, data = NULL)
+getvarnames = function(formula, data = NULL)
 {
   if (is.character(formula))
     return(list(varnames=formula, xvar=formula, yvar=NULL))
@@ -17,7 +17,7 @@ getvarnames <- function(formula, data = NULL)
   lyv <- NULL
   lxv <- lvnm <- all.vars(formula[1:2])
   if (length(formula)==3) {
-    lyv <- lxv 
+    lyv <- lxv
     lxv <- all.vars(formula[-2])
     if ("." %in% lxv) {
       if (length(data)==0)
@@ -27,5 +27,5 @@ getvarnames <- function(formula, data = NULL)
     }
     lvnm <- c(lxv, lvnm)
   }
-  list(varnames=lvnm, xvar=lxv, yvar=lyv)
+  return(list(varnames=lvnm, xvar=lxv, yvar=lyv))
 }
