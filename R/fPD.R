@@ -1,5 +1,5 @@
 #' @importFrom mvtnorm pmvnorm
-fPD=function(rho,covMiMj,pMi,bornep,p,pMj,borneq,q){
+fPD = function(rho,covMiMj,pMi,bornep,p,pMj,borneq,q){
   Sigma1=matrix(c(1,rho,rho,1),2,2)
   pmvn=NULL
   for (i in 1:length(p)){
