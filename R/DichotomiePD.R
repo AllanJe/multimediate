@@ -1,4 +1,4 @@
-DichotomiePD=function(fPD,e,covMiMj,pMi,bornep,p,pMj,borneq,q){
+DichotomiePD = function(fPD,e,covMiMj,pMi,bornep,p,pMj,borneq,q){
   u=-1
   v=1
   K=0
