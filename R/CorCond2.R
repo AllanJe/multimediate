@@ -2,7 +2,7 @@
 #' @importFrom rmutil int
 #'
 
-CorCond2=function(e,lmodel){
+CorCond2 = function(e,lmodel){
 
   is.Lm.Mi=inherits(lmodel[[1]],"lm") & !inherits(lmodel[[1]],"glm")
   is.Lm.Mj=inherits(lmodel[[2]],"lm") & !inherits(lmodel[[2]],"glm")
