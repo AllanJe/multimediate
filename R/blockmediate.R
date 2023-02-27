@@ -21,7 +21,7 @@
 #' @importFrom MASS mvrnorm
 #' @importFrom mvtnorm rmvnorm
 
-blockmediate=function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95,clust=NULL,seuil=0){
+blockmediate = function(lmodel.m,model.y,treat,treat.value=1,control.value=0,J=1000,conf.level=0.95,clust=NULL,seuil=0){
   N=dim(lmodel.m[[1]]$model)[1]
   NUM=length(lmodel.m)
 
