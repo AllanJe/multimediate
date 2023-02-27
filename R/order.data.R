@@ -1,4 +1,4 @@
-order.data=function(Exposure,Outcome,Mediators,P){
+order.data = function(Exposure,Outcome,Mediators,P){
   J=dim(Mediators)[1]#length(Exposure)
   K=dim(Mediators)[2]
 
