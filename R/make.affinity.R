@@ -1,4 +1,4 @@
-make.affinity <- function(S, seuil) {
+make.affinity = function(S, seuil) {
   N <- length(S[,1])
 
   if (seuil==0) {  # fully connected
@@ -21,5 +21,5 @@ make.affinity <- function(S, seuil) {
       }
     }
   }
-  W
+  return(W)
 }
