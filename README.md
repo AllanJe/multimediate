@@ -7,7 +7,7 @@ The work allowing multiple mediation analyzes with a survival outcome was largel
 Examples of use and supported models by our package are shown in vignettes/multimediate.html .
 
 
-If you have any questions or suggestions you can join me at allan.jerolon@parisdescartes.fr .
+If you have any questions or suggestions you can join me at jerolona@gmail.com .
 
 
 Follow the following instructions to download the package and install / use the vignettes :
