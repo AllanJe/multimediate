@@ -15,10 +15,7 @@ Imports:
     MASS, 
     mvtnorm, 
     stats, 
-    tsutils, 
-    gglasso, 
     graphics,
-    car,
     timereg
 Suggests: 
     knitr,
